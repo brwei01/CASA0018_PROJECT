@@ -22,13 +22,18 @@ The project has developed an application that can be deployed on an Arduino BLE3
 
 ## Application Overview
 - Application build
-This application components were Edge Impulse and Arduino BLE33 microphone. Edge Impulse was used in three main ways: 
-1. Data Sampling, Train-test Splitting;
-2. Model building, training, and testing;
-3. Model deployment to Aruidno
+This application components were Edge Impulse, Arduino BLE33 microphone and the Arduino IDE. Edge Impulse, as an end-to-end development platform for building and deploying machine learning models on edge devices played an important role in linking the components together:  
+1. Generating configuration files to connect Arduino BLE33 sensor to desktop;
+2. Data Sampling, Train-test Splitting;
+3. Model building, training, and testing;
+4. Model deployment to Aruidno;
 
 - application deployment and testing
-This application can be deployed on Arduino BLE33 by cloning down the files in this repository. By runing the file written in shell, it can
+This application can be deployed on Arduino BLE33 in two ways: 
+1. A ready-to-use shell application that can be runned directly on a desktop with Arduino BLE33 sensor connected. By cloning down the folder named "Drum-rack-inferencing-bin" in this repository to local, run the command file. After the configuration is finished, start up a new command window and run command:
+``` edge-impulse-daemon-run-impulse ```
+
+2. By runing the file written in shell, it can
 
 
 ## Data 
