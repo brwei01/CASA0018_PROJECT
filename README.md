@@ -29,7 +29,9 @@ This application components were Edge Impulse, Arduino BLE33 microphone and the 
 4. Generating model deployment solutions for Arduino sensor that can be runned by desktop shell command or the Arduino IDE.
 
 
-In terms of the hardwares, The Arduino BLE33 sensor that has recording functionality is required to be connected to a supportive desktop so that it can be operated through Edge Impulse in data sampling and live testing tasks, or the deployment through desktop shell command and Arduino IDE.
+In terms of the hardwares, The Arduino BLE33 sensor that has recording functionality is required to be connected to a supportive desktop so that it can be operated through Edge Impulse in data sampling and live testing tasks, or the deployment through desktop shell command and Arduino IDE. A flow chart that illustrate the application build is shown in the flow chart below:
+<img width="894" alt="build_flowchart" src="https://user-images.githubusercontent.com/116358733/235208217-a90b39aa-abdb-4fda-8538-c060ec7217ca.png">
+
 
 ### 3.2. System requirements
 The system requirements where this project is developed and tested is provided as follows:
