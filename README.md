@@ -59,14 +59,11 @@ Predictions (DSP: 33 ms., Classification: 31 ms., Anomaly: 0 ms.):
 <img width="1440" alt="include_library" src="https://user-images.githubusercontent.com/116358733/235211664-d6b8f58a-903a-4c9b-86df-109ae2c97a8a.png">
 
 
-
 Then download and open up the sketch file '/nano_ble33_sense_microphone/nano_ble33_sense_microphone.ino', click upload button to run the application. The output can be monitored via Tools > Serial monitor where the signal processing pipeline can be started. The 'baud rate' is recommended to be set at 115200, which indicates the data sent by the Arduino board will be transmitted at a speed of 115,200 bits per second.
 <img width="1190" alt="Screenshot 2023-04-28 at 18 15 35" src="https://user-images.githubusercontent.com/116358733/235212827-b0f99875-8653-44bf-bfdb-4c73e50e4f1b.png">
 
-This option to use Arduino as an Arduino library has a new feature that the classification result can be observed through different flashing behaviours of the device:
-
-
-
+This option to deploy the model as an Arduino library has a new feature that the classification result can be observed through different flashing behaviours of the device: It is set to flash once for 1000ms if the result is 'kick' and to flash 5 times if the result indicates 'tom'. 
+<img width="854" alt="flash_behaviour" src="https://user-images.githubusercontent.com/116358733/235215069-7017717d-969e-41b2-ae14-2cd99c713c81.png">
 
 
 
