@@ -62,6 +62,7 @@ Predictions (DSP: 33 ms., Classification: 31 ms., Anomaly: 0 ms.):
 Then download and open up the sketch file '/nano_ble33_sense_microphone/nano_ble33_sense_microphone.ino', click upload button to run the application. The output can be monitored via Tools > Serial monitor where the signal processing pipeline can be started. The 'baud rate' is recommended to be set at 115200, which indicates the data sent by the Arduino board will be transmitted at a speed of 115,200 bits per second.
 <img width="1190" alt="Screenshot 2023-04-28 at 18 15 35" src="https://user-images.githubusercontent.com/116358733/235212827-b0f99875-8653-44bf-bfdb-4c73e50e4f1b.png">
 
+
 This option to deploy the model as an Arduino library has a new feature that the classification result can be observed through different flashing behaviours of the device: It is set to flash once for 1000ms if the result is 'kick' and to flash 5 times if the result indicates 'tom'. 
 <img width="854" alt="flash_behaviour" src="https://user-images.githubusercontent.com/116358733/235215069-7017717d-969e-41b2-ae14-2cd99c713c81.png">
 
@@ -76,8 +77,8 @@ The data are sampled from mainly 2 sources: demo clips from Splice Sounds and se
   </tr>
 </table>
 
+The data samples are collected as sound clips of 15000 miliseconds at 16000 hertz. The sampling rate is decided to satisfy the Nyquist's theorem for all samples. (for detailed information please refer to [NUMBER]) Around 80% of the data was splitted as training set and 20% as test set by data sampler provoided by Edge Impulse interface. 
 
-The data samples are collected as sound clips of 15000 miliseconds at 16000 hertz. The sampling rate is decided to satisfy the Nyquist's theorem for all samples. Around 80% of the data was splitted as training set and 20% as test set by data sampler provoided by Edge Impulse interface.
 
 
 
@@ -97,7 +98,9 @@ Lastly, the deployment of the model on an Arduino device was discussed. The peak
 
 5.2 Differences and improvements from the demo task
 
-Compared to the demo task where data was sampled through an audio loopback driver 'blackhole' that records computer audio play with minimal latency, MFE model performed better in later development of this task. The model has two main differences in data preprocessing from the spectrogram used in demo task.
+Compared to the demo task where data was sampled through an audio loopback driver 'blackhole' that records computer audio play with minimal latency, 
+
+MFE model performed better in later development of this task. The model has two main differences in data preprocessing from the spectrogram used in demo task.
 
 
 ## 6. Experiments
@@ -117,9 +120,9 @@ Another example shows how a kick with obvious change in frequency(pitch) can be 
 
 ## 8. References
 
-Splice Sounds: https://splice.com/sounds/labels/splice
-
-
+- Splice Sounds: https://splice.com/sounds/labels/splice
+- Demo task presentation1: https://www.youtube.com/watch?v=_bu1VxgMrQs&t=562s
+- Demo task presentation2: https://www.youtube.com/watch?v=WKzNbHNQhQc&t=323s
 
 
 ## 9. Authorship
