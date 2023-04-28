@@ -23,7 +23,7 @@ The project has developed an application that can be deployed on an Arduino BLE3
 ## 3. Application Overview
 ### 3.1. Application build
 This application components were Edge Impulse, Arduino BLE33 microphone and the Arduino IDE. Edge Impulse, as an end-to-end development platform for building and deploying machine learning models on edge devices played an important role in linking the components together by accomplishing the following tasks:  
-1. Generating configuration files to connect Arduino BLE33 sensor to desktop;
+1. Generating files to update the firmware on Arduino BLE33 and make it ready for connection;
 2. Operating the sensor to sample data, and train-test set splitting of sampled data;
 3. Model building, training, and testing (with test set or live testing with new clips recorded);
 4. Generating model deployment solutions for Arduino sensor that can be runned by desktop shell command or the Arduino IDE.
