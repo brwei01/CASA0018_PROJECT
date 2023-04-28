@@ -34,12 +34,12 @@ In terms of the hardwares, The Arduino BLE33 sensor that has recording functiona
 ### 3.2. System requirements
 The system requirements where this project is developed and tested is provided as follows:
 - macOS Catalina version 10.15.4
-- Arduino IDE
+- Arduino IDE (2.0.3)
  
 
 ### 3.3.  application deployment and testing
 This application can be deployed and tested on Arduino BLE33 sensor in two ways: 
-1. A ready-to-use shell application that can be runned directly on a desktop with Arduino BLE33 sensor connected. By cloning down the folder named "drum-rack-nano-ble33-sense" in this repository to local, run the 'flash-mac.command' file. After the configuration is finished, start up a new command window and run command:
+1. A ready-to-use shell application that can be runned directly on a desktop with Arduino BLE33 sensor connected. By cloning down the folder named "drum-rack-nano-ble33-sense" in this repository to local, run the 'flash-mac.command' file to install the mapplication firmware on the sensor. After the installation is finished, start up a new command window and run command:
 ``` edge-impulse-run-impulse ``` 
 The application will run and log the following in the terminal on your desktop. The sound clip should be played after the 'Recording' prompt and the results are printed at the end of each classification loop:
 ``` 
@@ -52,7 +52,15 @@ Predictions (DSP: 33 ms., Classification: 31 ms., Anomaly: 0 ms.):
 ```
 
 
-2. A library for Arduino IDE
+2. A library for Arduino IDE -- By downloading the zip file named 'ei-drum-rack-arduino-1.0.2.zip' to the local. This zip file can then be included as a library in Arduino IDE. 
+
+<img width="1440" alt="include_library" src="https://user-images.githubusercontent.com/116358733/235198515-e73e1a18-95a4-4f1c-a4f0-5d884c921cfb.png">
+
+Then download and open up the sketch file '/nano_ble33_sense_microphone/nano_ble33_sense_microphone.ino', click upload button to run the application. The output can be monitored via Tools > Serial monitor where the signal processing pipeline can be started. The 'baud rate' is recommended to be set at 115200, which indicates the data sent by the Arduino board will be transmitted at a speed of 115,200 bits per second.
+
+
+
+
 
 
 ## 4. Data 
