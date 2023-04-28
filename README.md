@@ -56,9 +56,13 @@ Predictions (DSP: 33 ms., Classification: 31 ms., Anomaly: 0 ms.):
 
 2. A library for Arduino IDE -- By downloading the zip file named 'ei-drum-rack-arduino-1.0.2.zip' to the local. This zip file can then be included as a library in Arduino IDE. 
 
-<img width="1440" alt="include_library" src="https://user-images.githubusercontent.com/116358733/235198515-e73e1a18-95a4-4f1c-a4f0-5d884c921cfb.png">
+<img width="919" alt="build" src="https://user-images.githubusercontent.com/116358733/235210823-b22d1087-84a3-47b8-91a1-77e4ff2b81c3.png">
 
-Then download and open up the sketch file '/nano_ble33_sense_microphone/nano_ble33_sense_microphone.ino', click upload button to run the application. The output can be monitored via Tools > Serial monitor where the signal processing pipeline can be started. The 'baud rate' is recommended to be set at 115200, which indicates the data sent by the Arduino board will be transmitted at a speed of 115,200 bits per second.
+
+Then download and open up the sketch file '/nano_ble33_sense_microphone/nano_ble33_sense_microphone.ino', click upload button to run the application. The output can be monitored via Tools > Serial monitor where the signal processing pipeline can be started. The 'baud rate' is recommended to be set at 115200, which indicates the data sent by the Arduino board will be transmitted at a speed of 115,200 bits per second. 
+
+This option to use Arduino as an Arduino library has a new feature that the classification result can be observed through different flashing behaviours of the device:
+
 
 
 
