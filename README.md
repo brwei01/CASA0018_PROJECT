@@ -116,11 +116,18 @@ Lastly, the deployment of the model on an Arduino device was discussed. The peak
 
 ## 7. Results and Observations
 
+### 7.1 Results
 
+### 7.2 comparison and improvement to the demo task
+
+### 7.3 observations 
 The model was broadly tested by a wide range of sound clips labeled toms and kicks. And these test samples are also characterized in their names as 'cinematic', 'acoustic' etc, which may indicate these clips are quite different in design even within each label. Utilizing the variety of clips can be  It can be noticed that the different characteristics in resnotation and change in frequencies in the two types of sounds are captured by the model. In this example below, a kick that appears to have longer resonation is was misclassified as tom. 
 <img width="946" alt="mc_kick_reson" src="https://user-images.githubusercontent.com/116358733/234876502-af5544a2-1b04-45b6-a801-41c3e5366c61.png">
 
 Another example shows how a kick with obvious change in frequency(pitch) can be misclassified as 
+
+### 7.4 further considerations
+
 
 
 
@@ -132,4 +139,4 @@ Another example shows how a kick with obvious change in frequency(pitch) can be 
 
 
 ## 9. Authorship
-
+Borui Wei
