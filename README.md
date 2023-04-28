@@ -67,17 +67,25 @@ This option to deploy the model as an Arduino library has a new feature that the
 
 
 
-
 ## 4. Data 
-The data sampled can be sourced from KSHMR website: https://splice.com/sounds/packs/splice/kshmr-sok4-sample-pack/overview. The kicks and toms are played on the websites and recorded from the microphone. In the live testing, samples are used from both KSHMR Splice websites and self-contained audio sources from Ableton Live 10 Suite. 
+The data are sampled from mainly 2 sources: demo clips from Splice Sounds and self-contained audio sources from Ableton Live Suite 10 [1]. The sound clips labeled as 'kicks' and 'toms' are played on the desktop and recorded by Arduino Nano BLE33 built-in microphone. The signal recorded was then transmitted and uploaded to Edge Impulse platform, where labels can be given according to their orginal groups and a preview of the shapes of the signals can be presented. 
+<table>
+  <tr>
+    <td><img width="794" alt="train_test_split_rate" src="https://user-images.githubusercontent.com/116358733/235218284-82d79bd5-8fc1-49a6-89c6-42e20a09ebd1.png"></td>
+    <td><img width="1165" alt="preview_panel" src="https://user-images.githubusercontent.com/116358733/235218289-d46a7530-ae3b-4049-9d49-57ca8ab75f4f.png"></td>
+  </tr>
+</table>
 
-The data samples are collected as sound clips of 15000 miliseconds at 16000 hertz by Arduino BLE33 built-in microphone on the interface provided by Edge Impulse.
-These latter preprocessing steps are implemented within the models. The sampling rate is decided to satisfy the Nyquist's theorem for all samples. Around 80% of the data was splitted as training set and 20% as test set by data sampler provoided by Edge Impulse interface.
 
+The data samples are collected as sound clips of 15000 miliseconds at 16000 hertz. The sampling rate is decided to satisfy the Nyquist's theorem for all samples. Around 80% of the data was splitted as training set and 20% as test set by data sampler provoided by Edge Impulse interface.
+
+
+
+These latter preprocessing steps are implemented within the models.
 
 
 ## 5. Model
-- model choice
+5.1 Model choice
 The model architecture chosen is Spectr-conv1d-3de. 
 
 The MFE model was chosen as the pre-fitting technique, which extracted 640 features from the data, reshaped the layer into 32 columns, and applied three 1-dimensional convolutional layers, followed by a Flatten layer and a dropout layer, to output the features into two categories. The training process consisted of 100 cycles at a learning rate of 0.005.
@@ -87,11 +95,10 @@ The EON Tuning tool on Edge impulse was utilized to select the most suitable mod
 Lastly, the deployment of the model on an Arduino device was discussed. The peak RAM and flash usages were found to be moderate, indicating that the model was relatively lightweight.
 
 
-- differences and improvements from the demo task
+5.2 Differences and improvements from the demo task
 
 Compared to the demo task where data was sampled through an audio loopback driver 'blackhole' that records computer audio play with minimal latency, MFE model performed better in later development of this task. The model has two main differences in data preprocessing from the spectrogram used in demo task.
 
-In model structure, the MFE model 
 
 ## 6. Experiments
 
@@ -108,10 +115,12 @@ Another example shows how a kick with obvious change in frequency(pitch) can be 
 
 
 
+## 8. References
+
+Splice Sounds: https://splice.com/sounds/labels/splice
 
 
 
 
-
-## 8. Authorship
+## 9. Authorship
 
