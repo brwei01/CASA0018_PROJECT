@@ -30,7 +30,8 @@ This application components were Edge Impulse, Arduino BLE33 microphone and the 
 
 
 In terms of the hardwares, The Arduino BLE33 sensor that has recording functionality is required to be connected to a supportive desktop so that it can be operated through Edge Impulse in data sampling and live testing tasks, or the deployment through desktop shell command and Arduino IDE. A flow chart that illustrate the application build is shown in the flow chart below:
-<img width="894" alt="build_flowchart" src="https://user-images.githubusercontent.com/116358733/235208217-a90b39aa-abdb-4fda-8538-c060ec7217ca.png">
+<img width="919" alt="build" src="https://user-images.githubusercontent.com/116358733/235211627-efc15b7f-ba03-4579-a8c7-375d4f2ccd2f.png">
+
 
 
 ### 3.2. System requirements
@@ -55,8 +56,8 @@ Predictions (DSP: 33 ms., Classification: 31 ms., Anomaly: 0 ms.):
 
 
 2. A library for Arduino IDE -- By downloading the zip file named 'ei-drum-rack-arduino-1.0.2.zip' to the local. This zip file can then be included as a library in Arduino IDE. 
+<img width="1440" alt="include_library" src="https://user-images.githubusercontent.com/116358733/235211664-d6b8f58a-903a-4c9b-86df-109ae2c97a8a.png">
 
-<img width="919" alt="build" src="https://user-images.githubusercontent.com/116358733/235211368-cbeb58cb-3517-4085-9fce-c8e5155c1ec4.png">
 
 
 Then download and open up the sketch file '/nano_ble33_sense_microphone/nano_ble33_sense_microphone.ino', click upload button to run the application. The output can be monitored via Tools > Serial monitor where the signal processing pipeline can be started. The 'baud rate' is recommended to be set at 115200, which indicates the data sent by the Arduino board will be transmitted at a speed of 115,200 bits per second. 
