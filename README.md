@@ -94,8 +94,9 @@ The project has explored different models with combinations of parameters. There
 
 
 The data collected was first fitted with auto-tune Raw-feature, Spectrogram, MFE and MFCC models. The tuned parameters and results are shown in the table below. It can be noticed that, a raw-data model has given the worst accuracy of 60.3% in validation and 53.73% in test data. 
+
 |model|training cycles|learning rate|training score|test score|
-|--|--|--|--|
+|---|---|---|---|---|
 |raw-data|30|0.05|70%|70%|
 |spectrogram|100|0.005|70%|
 |MFE|100|0.005|76%|70%|
