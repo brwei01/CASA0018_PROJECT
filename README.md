@@ -113,8 +113,8 @@ Lastly, the deployment of the model on an Arduino device was discussed. The peak
 ### 7.1. Results
 <table>
   <tr>
-    <td<img width="570" alt="final_model_result" src="https://user-images.githubusercontent.com/116358733/235264560-bd201ce6-aaeb-4bf3-9b18-b5d14934eb87.png">
-></td>
+    <td><img width="570" alt="final_model_result" src="https://user-images.githubusercontent.com/116358733/235264560-bd201ce6-aaeb-4bf3-9b18-b5d14934eb87.png">
+</td>
     <td><img width="534" alt="final_model_testing_results" src="https://user-images.githubusercontent.com/116358733/235264568-5de04951-9761-405f-b0f6-206afb339af1.png">
 </td>
   </tr>
