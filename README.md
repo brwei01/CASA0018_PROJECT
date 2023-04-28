@@ -112,31 +112,41 @@ Lastly, the deployment of the model on an Arduino device was discussed. The peak
 ### 7.1. Results
 
 ### 7.2. comparison and improvement to the demo task
-In the final project, audio clips are recorded directly by the Arduino sensor with background noises. This can be beneficial for 2 reasons: 1. It takes into account the loss of signal to be trasmitted through air, and can make the model focus on its task to tell different instruments; 2. It uses the very sensor to collect data directly on which the model will later be deployed, so that better performance could be expected.
 
+The demo task focused on exploring how to extract features from different sound clips theoretically, to develop an application that can distinguish based on these features. Data was sampled using an audio loopback driver called 'Blackhole', which records directly from the computer's audio interface to minimize noise. Time series without data (where no oscillation is seen in the frequency graph) were then removed from the recorded clips. Finally, a Spectrogram model with the following parameters and architecture was chosen [NUMBER].
 
-Whereas, the demo task focused on exploring how features in different sound clips can be extracted on a theorectical basis so that an application according to this features distinguished can be developed. In the demo task, data was sampled through an audio loopback driver 'blackhole' that records directly from computer audio interface so that minimal noise will retain. The time series without data (where no oscillation seen in frequency graph) were then removed from the recorded clips. A Spectrogram model with window size of 1000ms (covering the whole time span of most audio clips) was finally chosen. This model, however, would not necessarily perform well in the final project for mainly 2 reasons: 1. It does not take into account background noise and signal loss in during transmission when model is purposed to be deployed on a sensor; 2. It will cost further workload to collect background noise (either form the environment or from looping back audio data) to imitate the situation of a sensor collecting data in the real-world. 
+However, this model may not perform well in the final project due to three main reasons: 1. It does not consider background noise and signal loss during transmission when the model is deployed on a sensor. 2. Collecting background noise (either from the environment or by looping back audio data) to imitate the real-world scenario of a sensor collecting data would require additional workload; 3. The data amount (1m17s) was relatively insufficient.
+
+In the final project, audio clips are recorded directly by the Arduino sensor with background noise, which can be beneficial for several reasons: 1. It accounts for signal loss during transmission through air, allowing the model to focus on distinguishing different instruments; 2. it uses the same sensor to collect data directly on which the model will later be deployed, potentially leading to better performance; 3. the data amount has increased from 1m17s to 10m10s.
+
 
 ### 7.3. observations 
 The model was broadly tested by a wide range of sound clips labeled toms and kicks. And these test samples are also characterized in their names as 'cinematic', 'acoustic' etc, which may indicate these clips are quite different in design even within each label. Utilizing the variety of clips can be  It can be noticed that the different characteristics in resnotation and change in frequencies in the two types of sounds are captured by the model. In this example below, a kick that appears to have longer resonation is was misclassified as tom. 
 <img width="946" alt="mc_kick_reson" src="https://user-images.githubusercontent.com/116358733/234876502-af5544a2-1b04-45b6-a801-41c3e5366c61.png">
 
-Another example shows how a kick with obvious change in frequency(pitch) can be misclassified as 
+
+Another example shows how a kick with obvious change in frequency(pitch) can be misclassified as
+
+Moreover, although spectrogram models do not perform as well as MFE or MFCC models during the pre-fitting stage, they seem to outperform the latter two after fine-tuning. This suggests that for instrumental sound clip classification tasks that transfer raw frequencies to spectrograms, deep learning models may perform better without reducing the higher frequency range or mimicking human perception. Additionally, incorporating cepstral coefficients is not necessary for such tasks that only focus on the tone colors of sounds.
 
 ### 7.4. further considerations
 If I had more time to work on this project, it could be further developed in the following ways:
 1. Adding more types of instruments to the collection.
 2. Incorporating more variations in tone for each instrument.
 3. Taking into consideration the factor of sound field. The position of different instruments has general guidelines and conventions, and often be engineered in electronic music production. This aspect may help us classify the instrument from its sound clip as an additional reference.
+4. increase the amount of data.
 
 
+## 8. Appendix
+- the project on edge impulse: https://studio.edgeimpulse.com/public/217672/latest
+- the demo project on edge impulse: https://studio.edgeimpulse.com/public/199755/latest
 
-## 8. References
+## 9. References
 
 - Splice Sounds: https://splice.com/sounds/labels/splice
 - Demo task presentation1: https://www.youtube.com/watch?v=_bu1VxgMrQs&t=562s
 - Demo task presentation2: https://www.youtube.com/watch?v=WKzNbHNQhQc&t=323s
 
 
-## 9. Authorship
+## 10. Authorship
 Borui Wei
