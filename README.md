@@ -9,7 +9,7 @@ This project employed deep learning techniques to discriminate between synthesiz
 The objective is to explore the ability of deep learning models to tell different tone colours with the help of sensors. Sometimes in music production especially electronic sound engineering, there are sounds that easily to get mixed with others, like toms and kicks. Deep learning models 'hears' different sounds in a quite different way -- by analyzing the spectrograms ('seeing' the sound rather than hearing).
 
 
-The project has developed an application that can be deployed on an Arduino BLE33 sensor through the help of Edge Impulse. By deploying it on a suitable sensor, the model embedded will analyse the singal that the sensor has to intake, and returns an answer determining whether the sound clip is likely to be a kick or tom. Given an accuracy of 80%, the application is relatively trustful in classifying these 2 instruments from a drum rack.
+The project has developed an application that can be deployed on an Arduino BLE33 sensor through the help of Edge Impulse. The application can be runned either on desktop terminal, or By deploying it on a suitable sensor, the model embedded will analyse the singal that the sensor has to intake, and returns an answer determining whether the sound clip is likely to be a kick or tom. Given an accuracy of 80%, the application is relatively trustful in classifying these 2 instruments from a drum rack.
 
 
 
@@ -30,8 +30,18 @@ This application components were Edge Impulse, Arduino BLE33 microphone and the 
 
 - application deployment and testing
 This application can be deployed on Arduino BLE33 in two ways: 
-1. A ready-to-use shell application that can be runned directly on a desktop with Arduino BLE33 sensor connected. By cloning down the folder named "Drum-rack-inferencing-bin" in this repository to local, run the command file. After the configuration is finished, start up a new command window and run command:
-``` edge-impulse-daemon-run-impulse ```
+1. A ready-to-use shell application that can be runned directly on a desktop with Arduino BLE33 sensor connected. By cloning down the folder named "drum-rack-nano-ble33-sense" in this repository to local, run the 'flash-mac.command' file. After the configuration is finished, start up a new command window and run command:
+``` edge-impulse-run-impulse ``` 
+The application will run and log the following, the sound clip should be played after the 'Recording' prompt and the results are printed at the end of each classification loop:
+``` 
+Starting inferencing in 2 seconds...
+Recording...
+Recording done
+Predictions (DSP: 33 ms., Classification: 31 ms., Anomaly: 0 ms.): 
+    kick: 0.73047
+    tom: 0.26953
+
+```
 
 2. By runing the file written in shell, it can
 
@@ -46,9 +56,9 @@ These latter preprocessing steps are implemented within the models. The sampling
 
 ## Model
 - model choice
-The model architecture chosen is MFE-conv1d-daf. 
+The model architecture chosen is Spectr-conv1d-3de. 
 
- The MFE model was chosen as the pre-fitting technique, which extracted 640 features from the data, reshaped the layer into 32 columns, and applied three 1-dimensional convolutional layers, followed by a Flatten layer and a dropout layer, to output the features into two categories. The training process consisted of 100 cycles at a learning rate of 0.005.
+The MFE model was chosen as the pre-fitting technique, which extracted 640 features from the data, reshaped the layer into 32 columns, and applied three 1-dimensional convolutional layers, followed by a Flatten layer and a dropout layer, to output the features into two categories. The training process consisted of 100 cycles at a learning rate of 0.005.
 
 The EON Tuning tool on Edge impulse was utilized to select the most suitable models, which identified the MFE and spectrogram models as the optimal choices. The spectrogram model outperformed the MFE model by approximately 4% on the test set and had lower performance latency. Given that the time windows were set as 1000ms, covering most of the time spans of the samples, the MFE appeared to have the same sampling range as the spectrogram model, which windowed over the entire time span of individual samples. This suggests that there was no need to be concerned about the spectrogram model not providing as much detail as the MFE. The performance of both models on the validation and test datasets is depicted on the subsequent slide.
 
@@ -67,8 +77,6 @@ In model structure, the MFE model
 
 
 ## Results and Observations
-
-
 
 
 The model was broadly tested by a wide range of sound clips labeled toms and kicks. And these test samples are also characterized in their names as 'cinematic', 'acoustic' etc, which may indicate these clips are quite different in design even within each label. Utilizing the variety of clips can be  It can be noticed that the different characteristics in resnotation and change in frequencies in the two types of sounds are captured by the model. In this example below, a kick that appears to have longer resonation is was misclassified as tom. 
