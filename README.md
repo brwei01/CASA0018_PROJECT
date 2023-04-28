@@ -5,12 +5,11 @@ Borui Wei
 
 ## 1. Introduction
 
-This project employed deep learning techniques to discriminate between synthesizer engineered sound effects/clips of 2 types of instruments in a drum rack -- kicks and toms. The inspiration of this project comes from the examples of projects "letting your sensors to hear" introduced by Edge Impulse. The MFE, MFCC and Spectrogram models are well suitated the need of sound detection or classification.
-The objective is to explore the ability of deep learning models to tell different tone colours with the help of sensors. Sometimes in music production especially electronic sound engineering, there are sounds that easily to get mixed with others, like toms and kicks. Deep learning models 'hears' different sounds in a quite different way -- by analyzing the spectrograms ('seeing' the sound rather than hearing).
+This project explores the use of deep learning techniques to distinguish between two types of instruments - kicks and toms - in a drum rack using sensor data. The inspiration of this project comes from the examples of projects "letting your sensors to hear" introduced by Edge Impulse. The MFE, MFCC and Spectrogram models are well suitated the need of sound detection or classification.
 
+The objective is to explore the ability of deep learning models to tell different tone colours with the help of sensors. Sometimes in music production especially electronic sound engineering, there are sounds that easily to get mixed with others, like toms and kicks. Although there could be difficulties telling them apart by human ears, these sounds are engineered with certain rules (e.g. toms and kicks certainly have different features). Deep learning models 'hears' different sounds in a quite different way -- by analyzing the spectrograms ('seeing' the sound rather than hearing), which may provide innovative solution to this problem.
 
-The project has developed an application that can be deployed on an Arduino BLE33 sensor through the help of Edge Impulse. The application can be runned either on desktop terminal, or By deploying it on a suitable sensor, the model embedded will analyse the singal that the sensor has to intake, and returns an answer determining whether the sound clip is likely to be a kick or tom. Given an accuracy of 80%, the application is relatively trustful in classifying these 2 instruments from a drum rack.
-
+The project has developed an application that can be deployed on an Arduino BLE33 sensor through the help of Edge Impulse. The application can be runned either on desktop terminal, or By deploying it on a suitable sensor, the model embedded will analyse the singal that the sensor has to intake, and returns an answer determining whether the sound clip is likely to be a kick or tom. Given an accuracy of 80%, the application is relatively trustful in classifying these 2 instruments from a drum set.
 
 
 ## 2. Research Question
@@ -81,9 +80,10 @@ These latter preprocessing steps are implemented within the models building proc
 
 
 ## 5. Model
-The model architecture chosen is Spectr-conv1d-3de. This model includes
+The model architecture chosen is a Spectrogram model with 4 1 dimensional convolusional layers 'Spectr-conv1d-'.
 
 
+The MFE model was chosen as the pre-fitting technique, which extracted 640 features from the data, reshaped the layer into 32 columns, and applied three 1-dimensional convolutional layers, followed by a Flatten layer and a dropout layer, to output the features into two categories. The training process consisted of 100 cycles at a learning rate of 0.005.
 
 
 
@@ -93,18 +93,18 @@ The project has explored different models with combinations of parameters. There
 <img width="833" alt="model comparison" src="https://user-images.githubusercontent.com/116358733/235237025-16423d96-53f8-4530-819c-e879e9810d4d.png">
 
 
-The data collected was first fitted with a MFE model, as it is recommended for audio events processing. A total of 313 windows were first generated out of the 8m1s training data. 
-
-The MFE model was chosen as the pre-fitting technique, which extracted 640 features from the data, reshaped the layer into 32 columns, and applied three 1-dimensional convolutional layers, followed by a Flatten layer and a dropout layer, to output the features into two categories. The training process consisted of 100 cycles at a learning rate of 0.005.
-
-
+The data collected was first fitted with auto-tune Raw-feature, Spectrogram, MFE and MFCC models. The tuned parameters and results are shown in the table below. It can be noticed that, a raw-data model has given the worst accuracy of 60.3% in validation and 53.73% in test data. 
+|model|training cycles|learning rate|training score|test score|
+|--|--|--|--|
+|raw-data|30|0.05|70%|70%|
+|spectrogram|100|0.005|70%|
+|MFE|100|0.005|76%|70%|
+|MFCC|100|0.005|76%|70%|
 
 
 The EON Tuning tool on Edge impulse was utilized to select the most suitable models, which identified the MFE and spectrogram models as the optimal choices. The spectrogram model outperformed the MFE model by approximately 4% on the test set and had lower performance latency. Given that the time windows were set as 1000ms, covering most of the time spans of the samples, the MFE appeared to have the same sampling range as the spectrogram model, which windowed over the entire time span of individual samples. This suggests that there was no need to be concerned about the spectrogram model not providing as much detail as the MFE. The performance of both models on the validation and test datasets is depicted on the subsequent slide.
 
-Lastly, the deployment of the model on an Arduino device was discussed. The peak RAM and flash usages were found to be moderate, indicating that the model was relatively lightweight.
-
-
+Lastly, the deployment of the model on an Arduino device was discussed. The peak RAM and flash usages were found to be moderate, indicating that the model was relatively lightweight and suitable for such kind of sensor.
 
 
 ## 7. Results and Observations
