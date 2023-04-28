@@ -104,6 +104,9 @@ The data collected was first fitted with a MFE model, as it is recommended for a
 
 The MFE model was chosen as the pre-fitting technique, which extracted 640 features from the data, reshaped the layer into 32 columns, and applied three 1-dimensional convolutional layers, followed by a Flatten layer and a dropout layer, to output the features into two categories. The training process consisted of 100 cycles at a learning rate of 0.005.
 
+
+
+
 The EON Tuning tool on Edge impulse was utilized to select the most suitable models, which identified the MFE and spectrogram models as the optimal choices. The spectrogram model outperformed the MFE model by approximately 4% on the test set and had lower performance latency. Given that the time windows were set as 1000ms, covering most of the time spans of the samples, the MFE appeared to have the same sampling range as the spectrogram model, which windowed over the entire time span of individual samples. This suggests that there was no need to be concerned about the spectrogram model not providing as much detail as the MFE. The performance of both models on the validation and test datasets is depicted on the subsequent slide.
 
 Lastly, the deployment of the model on an Arduino device was discussed. The peak RAM and flash usages were found to be moderate, indicating that the model was relatively lightweight.
