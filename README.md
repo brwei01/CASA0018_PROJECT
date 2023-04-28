@@ -77,7 +77,7 @@ The data are sampled from mainly 2 sources: demo clips from Splice Sounds and se
   </tr>
 </table>
 
-These latter preprocessing steps are implemented within the models building processes and are going to be introduced in the next section.
+These latter preprocessing steps are implemented within the models building processes and are going to be introduced in the 'Experiments' section.
 
 
 ## 5. Model
@@ -96,7 +96,12 @@ MFE model performed better in later development of this task. The model has two 
 
 ## 6. Experiments 
 
-The data collected was first fitted with a MFE model. 
+The project has explored different models with combinations of parameters. There are mainly 3 models suitable for audio processing on Edge Impulse: MFE, MFCC and Spectrogram. These models mainly differentiates in data preprocessing. All models takes the approach of windowing and fourier transformation so that the continuous signal are clipped into smaller segments with smooth edges. The MFE model further puts a filter over signal collected to imitate the human hearing ability. Based on this filter, the MFCC model extracts information in a higher dimension (contains more features) by considering the shape of the spectrum (more detailed information please refer to [NUMBER]). A illustration of the differences of the 3 models is shown as follows.
+<img width="833" alt="model comparison" src="https://user-images.githubusercontent.com/116358733/235237025-16423d96-53f8-4530-819c-e879e9810d4d.png">
+
+
+The data collected was first fitted with a MFE model, as it is recommended for audio events processing. 
+
 The MFE model was chosen as the pre-fitting technique, which extracted 640 features from the data, reshaped the layer into 32 columns, and applied three 1-dimensional convolutional layers, followed by a Flatten layer and a dropout layer, to output the features into two categories. The training process consisted of 100 cycles at a learning rate of 0.005.
 
 The EON Tuning tool on Edge impulse was utilized to select the most suitable models, which identified the MFE and spectrogram models as the optimal choices. The spectrogram model outperformed the MFE model by approximately 4% on the test set and had lower performance latency. Given that the time windows were set as 1000ms, covering most of the time spans of the samples, the MFE appeared to have the same sampling range as the spectrogram model, which windowed over the entire time span of individual samples. This suggests that there was no need to be concerned about the spectrogram model not providing as much detail as the MFE. The performance of both models on the validation and test datasets is depicted on the subsequent slide.
