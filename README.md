@@ -124,7 +124,10 @@ The model was broadly tested by a wide range of sound clips labeled toms and kic
 Another example shows how a kick with obvious change in frequency(pitch) can be misclassified as 
 
 ### 7.4. further considerations
-
+If I had more time to work on this project, it could be further developed in the following ways:
+1. Adding more types of instruments to the collection.
+2. Incorporating more variations in tone for each instrument.
+3. Taking into consideration the factor of sound field. The position of different instruments has general guidelines and conventions, and often be engineered in electronic music production. This aspect may help us classify the instrument from its sound clip as an additional reference.
 
 
 
