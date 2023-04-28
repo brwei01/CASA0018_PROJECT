@@ -69,7 +69,7 @@ This option to deploy the model as an Arduino library has a new feature that the
 
 
 ## 4. Data 
-The data are sampled from mainly 2 sources: demo clips from Splice Sounds and self-contained audio sources from Ableton Live Suite 10 [1]. The sound clips labeled as 'kicks' and 'toms' are played on the desktop and recorded by Arduino Nano BLE33 built-in microphone. The signal recorded was then transmitted and uploaded to Edge Impulse platform, where labels can be given according to their orginal groups and a preview of the shapes of the signals can be presented. 
+The data are sampled from mainly 2 sources: demo clips from Splice Sounds and self-contained audio sources from Ableton Live Suite 10 [1]. The sound clips labeled as 'kicks' and 'toms' are played on the desktop and recorded by Arduino Nano BLE33 built-in microphone. The signal recorded was then transmitted and uploaded to Edge Impulse platform, where labels can be given according to their orginal groups and a preview of the shapes of the signals can be presented. The data samples are collected as sound clips of 15000 miliseconds at 16000 hertz. The sampling rate is decided to satisfy the Nyquist's theorem for all samples. (for detailed information please refer to [NUMBER]) Around 80% of the data (313 records) was splitted as training set and 20% (84 records) as test set, and in total they account for 10m10s of audio recording.
 <table>
   <tr>
     <td><img width="794" alt="train_test_split_rate" src="https://user-images.githubusercontent.com/116358733/235218284-82d79bd5-8fc1-49a6-89c6-42e20a09ebd1.png"></td>
@@ -77,33 +77,31 @@ The data are sampled from mainly 2 sources: demo clips from Splice Sounds and se
   </tr>
 </table>
 
-The data samples are collected as sound clips of 15000 miliseconds at 16000 hertz. The sampling rate is decided to satisfy the Nyquist's theorem for all samples. (for detailed information please refer to [NUMBER]) Around 80% of the data was splitted as training set and 20% as test set by data sampler provoided by Edge Impulse interface. 
-
-
-
-
-These latter preprocessing steps are implemented within the models.
+These latter preprocessing steps are implemented within the models building processes and are going to be introduced in the next section.
 
 
 ## 5. Model
 5.1 Model choice
-The model architecture chosen is Spectr-conv1d-3de. 
-
-The MFE model was chosen as the pre-fitting technique, which extracted 640 features from the data, reshaped the layer into 32 columns, and applied three 1-dimensional convolutional layers, followed by a Flatten layer and a dropout layer, to output the features into two categories. The training process consisted of 100 cycles at a learning rate of 0.005.
-
-The EON Tuning tool on Edge impulse was utilized to select the most suitable models, which identified the MFE and spectrogram models as the optimal choices. The spectrogram model outperformed the MFE model by approximately 4% on the test set and had lower performance latency. Given that the time windows were set as 1000ms, covering most of the time spans of the samples, the MFE appeared to have the same sampling range as the spectrogram model, which windowed over the entire time span of individual samples. This suggests that there was no need to be concerned about the spectrogram model not providing as much detail as the MFE. The performance of both models on the validation and test datasets is depicted on the subsequent slide.
-
-Lastly, the deployment of the model on an Arduino device was discussed. The peak RAM and flash usages were found to be moderate, indicating that the model was relatively lightweight.
+The model architecture chosen is Spectr-conv1d-3de. This model includes
 
 
-5.2 Differences and improvements from the demo task
+
+
+5.3 Differences and improvements from the demo task
 
 Compared to the demo task where data was sampled through an audio loopback driver 'blackhole' that records computer audio play with minimal latency, 
 
 MFE model performed better in later development of this task. The model has two main differences in data preprocessing from the spectrogram used in demo task.
 
 
-## 6. Experiments
+## 6. Experiments 
+
+The data collected was first fitted with a MFE model. 
+The MFE model was chosen as the pre-fitting technique, which extracted 640 features from the data, reshaped the layer into 32 columns, and applied three 1-dimensional convolutional layers, followed by a Flatten layer and a dropout layer, to output the features into two categories. The training process consisted of 100 cycles at a learning rate of 0.005.
+
+The EON Tuning tool on Edge impulse was utilized to select the most suitable models, which identified the MFE and spectrogram models as the optimal choices. The spectrogram model outperformed the MFE model by approximately 4% on the test set and had lower performance latency. Given that the time windows were set as 1000ms, covering most of the time spans of the samples, the MFE appeared to have the same sampling range as the spectrogram model, which windowed over the entire time span of individual samples. This suggests that there was no need to be concerned about the spectrogram model not providing as much detail as the MFE. The performance of both models on the validation and test datasets is depicted on the subsequent slide.
+
+Lastly, the deployment of the model on an Arduino device was discussed. The peak RAM and flash usages were found to be moderate, indicating that the model was relatively lightweight.
 
 
 
