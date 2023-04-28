@@ -81,17 +81,10 @@ These latter preprocessing steps are implemented within the models building proc
 
 
 ## 5. Model
-### 5.1 Model choice
 The model architecture chosen is Spectr-conv1d-3de. This model includes
 
 
 
-
-### 5.2 Differences and improvements from the demo task
-
-In the final project, audio clips are recorded directly by the Arduino sensor with background noises. This can be beneficial for 2 reasons: 1. It takes into account the loss of signal to be trasmitted through air, and can make the model focus on its task to tell different instruments; 2. It uses the very sensor to collect data directly on which the model will later be deployed, so that better performance could be expected.
-
-Whereas, the demo task focused on exploring how features in different sound clips can be extracted on a theorectical basis so that an application according to this features distinguished can be developed. In the demo task, data was sampled through an audio loopback driver 'blackhole' that records directly from computer audio interface so that minimal noise will retain. The time series without data (where no oscillation seen in frequency graph) were then removed from the recorded clips. A Spectrogram model with window size of 1000ms (covering the whole time span of most audio clips) was finally chosen. This model, however, would not necessarily perform well in the final project for mainly 2 reasons: 1. It does not take into account background noise and signal loss in during transmission when model is purposed to be deployed on a sensor; 2. It will cost further workload to collect background noise (either form the environment or from looping back audio data) to imitate the situation of a sensor collecting data in the real-world. 
 
 
 ## 6. Experiments 
@@ -119,6 +112,10 @@ Lastly, the deployment of the model on an Arduino device was discussed. The peak
 ### 7.1 Results
 
 ### 7.2 comparison and improvement to the demo task
+In the final project, audio clips are recorded directly by the Arduino sensor with background noises. This can be beneficial for 2 reasons: 1. It takes into account the loss of signal to be trasmitted through air, and can make the model focus on its task to tell different instruments; 2. It uses the very sensor to collect data directly on which the model will later be deployed, so that better performance could be expected.
+
+
+Whereas, the demo task focused on exploring how features in different sound clips can be extracted on a theorectical basis so that an application according to this features distinguished can be developed. In the demo task, data was sampled through an audio loopback driver 'blackhole' that records directly from computer audio interface so that minimal noise will retain. The time series without data (where no oscillation seen in frequency graph) were then removed from the recorded clips. A Spectrogram model with window size of 1000ms (covering the whole time span of most audio clips) was finally chosen. This model, however, would not necessarily perform well in the final project for mainly 2 reasons: 1. It does not take into account background noise and signal loss in during transmission when model is purposed to be deployed on a sensor; 2. It will cost further workload to collect background noise (either form the environment or from looping back audio data) to imitate the situation of a sensor collecting data in the real-world. 
 
 ### 7.3 observations 
 The model was broadly tested by a wide range of sound clips labeled toms and kicks. And these test samples are also characterized in their names as 'cinematic', 'acoustic' etc, which may indicate these clips are quite different in design even within each label. Utilizing the variety of clips can be  It can be noticed that the different characteristics in resnotation and change in frequencies in the two types of sounds are captured by the model. In this example below, a kick that appears to have longer resonation is was misclassified as tom. 
