@@ -1,6 +1,6 @@
 # CASA0018_PROJECT
 
-# Telling different Electronic Instruments
+# Telling different Electronic Instruments -- using toms and kicks as example
 Borui Wei
 
 ## 1. Introduction
