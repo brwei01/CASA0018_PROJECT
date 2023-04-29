@@ -71,7 +71,7 @@ Predictions (DSP: 33 ms., Classification: 31 ms., Anomaly: 0 ms.):
 
 <img width="1440" alt="include_library" src="https://user-images.githubusercontent.com/116358733/235211664-d6b8f58a-903a-4c9b-86df-109ae2c97a8a.png">
 
-*Figure 3. Include the model as library in Arduino IDE -- i*
+*Figure 3. Include the model as library in Arduino IDE*
 
 Then download and open up the sketch file '/nano_ble33_sense_microphone/nano_ble33_sense_microphone.ino', click upload button to run the application. The output can be monitored via Tools > Serial monitor where the signal processing pipeline can be started. The 'baud rate' is recommended to be set at 115200, which indicates the data sent by the Arduino board will be transmitted at a speed of 115,200 bits per second.
 
