@@ -169,5 +169,9 @@ If I had more time to work on this project, it could be further developed in the
 - Recognize sounds from audio: https://docs.edgeimpulse.com/docs/tutorials/audio-classification
 
 
-## 10. Authorship
-Borui Wei
+## 10. Declaration of Authorship
+I, Borui Wei, confirm that the work presented in this assessment is my own. Where information has been derived from other sources, I confirm that this has been indicated in the work
+
+
+Borui Wei, 
+27/04/2023
