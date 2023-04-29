@@ -5,18 +5,30 @@ Borui Wei
 
 ## 1. Introduction
 
-This project explores the use of deep learning techniques to distinguish between two types of instruments - kicks and toms - in a drum rack using sensor data. The inspiration of this project comes from the examples of projects "letting your sensors to hear" introduced by Edge Impulse. The MFE, MFCC and Spectrogram models are well suitated the need of sound detection or classification.
+This project explores the use of deep learning techniques to distinguish between two types of instruments - kicks and toms, in a drum set using sensor data. This project is inspired by the demonstration projects on Edge Impulse, where deep learning models deployed on sensors have shown the capacity to recognise a continuous sound - the runing faucet, or to respond to more complicated words with syllables.
 
-The objective is to explore the ability of deep learning models to tell different tone colours with the help of sensors. Sometimes in music production especially electronic sound engineering, there are sounds that easily to get mixed with others, like toms and kicks. Although there could be difficulties telling them apart by human ears, these sounds are engineered with certain rules (e.g. toms and kicks certainly have different features). Deep learning models 'hears' different sounds in a quite different way -- by analyzing the spectrograms ('seeing' the sound rather than hearing), which may provide innovative solution to this problem.
+The objective is to explore the ability of deep learning models to tell different tone colours with the help of sensors. Sometimes in music production especially electronic sound engineering, there are sounds that easily to get mixed with others, like toms and kicks. Although these sounds are engineered with rules (i.e. toms and kicks certainly have different auditory perceptions), sometimes there could be still be difficulties telling them apart by human ears. Deep learning models may 'hear' these different sounds and distinguish them in a quite different way -- by analyzing the spectrograms ('seeing' the sound rather than hearing), which may provide an innovative solution to this problem.
 
-The project has developed an application that can be deployed on an Arduino BLE33 sensor through the help of Edge Impulse. The application can be runned either on desktop terminal, or By deploying it on a suitable sensor, the model embedded will analyse the singal that the sensor has to intake, and returns an answer determining whether the sound clip is likely to be a kick or tom. Given an accuracy of 80%, the application is relatively trustful in classifying these 2 instruments from a drum set.
+The project has developed an application that can be deployed on an Arduino 33 BLE sensor through the help of Edge Impulse. The application can be runned either on desktop terminal, or By deploying it on a suitable sensor, the model embedded will analyse the singal that the sensor has to intake, and returns an answer determining whether the sound clip is likely to be a kick or tom. Given an accuracy of 80%, the application is relatively trustful in classifying these 2 instruments from a drum set.
+
+<table>
+  <tr>
+    <td><img width="1440" alt="interface" src="https://user-images.githubusercontent.com/116358733/235301565-036a0d1b-3635-49b6-80e9-5802708b57b7.png">
+
+</td>
+    <td>![Sensor](https://user-images.githubusercontent.com/116358733/235301571-b3c9fe65-f5c9-4f37-979b-e1140c952f6e.png)
+</td>
+  </tr>
+</table>
+
+*Figure 1. A demonstration of the application -- connect sensor and record the sound played by desktop. The sensor flashes differently on classification*
 
 
 ## 2. Research Question
 
-1. How effcient are the deep learning models combined with sensors in distinguishing different electronic instrumental sounds.
+1. How effcient are the deep learning models combined with sensors in distinguishing different electronic instruments.
 
-2. What features in sound design are extracted by deep learning models.
+2. What features in different sounds are better extracted by deep learning models? Are there any features overused and other neglected?
 
 
 ## 3. Application Overview
@@ -29,6 +41,7 @@ This application components were Edge Impulse, Arduino BLE33 microphone and the 
 
 
 In terms of the hardwares, The Arduino BLE33 sensor that has recording functionality is required to be connected to a supportive desktop so that it can be operated through Edge Impulse in data sampling and live testing tasks, or the deployment through desktop shell command and Arduino IDE. A flow chart that illustrate the application build is shown in the flow chart below:
+
 <img width="919" alt="build" src="https://user-images.githubusercontent.com/116358733/235211627-efc15b7f-ba03-4579-a8c7-375d4f2ccd2f.png">
 
 
@@ -83,11 +96,11 @@ These latter preprocessing steps are implemented within the models building proc
 
 
 ## 5. Model
-The model architecture chosen is a Spectrogram model with 4 1-dimensional convolutional neural network (refered to as 'Spectr-conv1d-6df' on Edge Impulse). The model requires 4 hyperparameters: Frame length, Frame stride and FFT length. Frame length was set as 0.025 second, indicating the length of segments when performing windowing over each record. Frame stride was decided as 0.025 second, meaning that the neighbouring two windows does not have any overlapping. FFT length is decided as 128, meaning that within each cycle on the frequency chart, 128 sample points are taken to represent the oscillation during the period of time within the cycle. This process of how raw data is processed through setting these parameters is shown here:
+The model architecture chosen is a Spectrogram model with 4 1-dimensional convolutional neural network. The model requires 4 hyperparameters: Frame length, Frame stride and FFT length. Frame length was set as 0.025 second, indicating the length of segments when performing windowing over each record. Frame stride was decided as 0.025 second, meaning that the neighbouring two windows does not have any overlapping. FFT length is decided as 128, meaning that within each cycle on the frequency chart, 128 sample points are taken to represent the oscillation during the period of time within the cycle (detailed information please refer to [NUMBER]). This process of how raw data is processed through setting these parameters is shown here:
 
 <img width="1035" alt="flowchart_data_preprocessing" src="https://user-images.githubusercontent.com/116358733/235274762-87ec8590-046a-47b3-9a90-fffdfc9af228.png">
 
-In the next steps, the preprocessed data samples are put into the neural. The neural network is structured as shown in the image below. The 2600 features processed from the last step as the input layer was firstly reshaped into 65 columns. The reshaped layer was then applied to 4 1D-convolutional layers all with a convolution kernel size of 3, and containing neurons of 16, 32, 64 and 128 respectively. Relu was used as activation function after each layer. The features then goes into a flatten layer and a dropout layer (with rate 0.5) to output the features into 2 categories. The training process consisted of 100 cycles at a learning rate of 0.005. The optimization method chosen to use is Adam.
+In the next steps, the preprocessed data samples are put into the neural network that is structured as shown in the image below. The 2600 features processed from the last step as the input layer was firstly reshaped into 65 columns. The reshaped layer was then applied to 4 1D-convolutional layers all with a convolution kernel size of 3, and containing neurons of 16, 32, 64 and 128 respectively. Relu was used as activation function after each layer. The features then goes into a flatten layer and a dropout layer (with rate 0.5) to output the features into 2 categories. The training process consisted of 100 cycles at a learning rate of 0.005. The optimization method chosen is Adam.
 
 <table>
   <tr>
@@ -100,7 +113,7 @@ In the next steps, the preprocessed data samples are put into the neural. The ne
 </table>
 
 
-Lastly, the deployment of the model on an Arduino have produced a report for peak RAM usage of 11.9kb and a flash usages of 66.3kb were found to be moderate, indicating that the model was relatively lightweight and suitable for such kind of sensor (with 1MB flash and 256kb SRAM).
+Lastly, the deployment of the model on an Arduino have produced a report for peak RAM usage of 11.9kb and a flash usages of 66.3kb were found to be moderate, indicating that the model was relatively lightweight and suitable for such kind of sensor (with 1MB flash and 256kb SRAM [NUMBER]).
 
 <img width="471" alt="on_device_performance" src="https://user-images.githubusercontent.com/116358733/235273576-6c03c3cb-7372-4073-a0f8-874ac6e6fb1f.png">
 
@@ -120,8 +133,9 @@ The data collected was first fitted with auto-tune Raw-feature, Spectrogram, MFE
 |spectrogram|100|0.005|76%|64%|
 |MFE|100|0.005|79%|76%|
 |MFCC|100|0.005|78%|70%|
+*Table 1: Comparison between 4 prefitted models.*
 
-The MFE model have
+According to the table, MFE has appeared to perform better compared to the Spectrogram and MFCC. The 
 
 The EON Tuning tool on Edge impulse was utilized to select the most suitable models, which identified the MFE and spectrogram models as the optimal choices. The spectrogram models 一些数据的比较 Notably, the latency of the optimal model has exceeded the tuning target by 5389ms per inference even though it has the best accuracy scores.
 
@@ -138,6 +152,7 @@ the results of the model selected are shown below. Spectr-conv1d-6df has produce
 </td>
   </tr>
 </table>
+*Figure 1: Model results on validation set and test set.*
 
 ### 7.2. comparison and improvement to the demo task
 
@@ -149,20 +164,20 @@ In the final project, audio clips are recorded directly by the Arduino sensor wi
 
 
 ### 7.3. observations 
-The model was broadly tested by a wide range of sound clips labeled toms and kicks. And these test samples are also characterized in their names as 'cinematic', 'acoustic' etc, which may indicate these clips are quite different in design even within each label. Utilizing the variety of clips can be  It can be noticed that the different characteristics in resnotation and change in frequencies in the two types of sounds are captured by the model. In this example below, a kick that appears to have longer resonation is was misclassified as tom. 
-<img width="946" alt="mc_kick_reson" src="https://user-images.githubusercontent.com/116358733/234876502-af5544a2-1b04-45b6-a801-41c3e5366c61.png">
+The model was broadly tested by a wide range of sound clips labeled toms and kicks. And these test samples are also characterized in their names as 'cinematic', 'acoustic' etc, which may indicate these clips are quite different in design even within each label. Utilizing the variety of clips can be  It was noticed that the differece in resnotation and change in frequencies of the two types of sounds are well captured by the model. In the two examples below, a kick that appears to have longer resonation was misclassified as tom, and a tom that has shorter resonation was misclassified as kick.
 
+<img width="946" alt="mc_kick_reson" src="https://user-images.githubusercontent.com/116358733/234876502-af5544a2-1b04-45b6-a801-41c3e5366c61.png">
 
 Another example shows how a kick with obvious change in frequency(pitch) can be misclassified as
 
-Moreover, although spectrogram models do not perform as well as MFE or MFCC models during the pre-fitting stage, they seem to outperform the latter two after fine-tuning. This suggests that for instrumental sound clip classification tasks that transfer raw frequencies to spectrograms, deep learning models may perform better without reducing the higher frequency range or mimicking human perception. Additionally, incorporating cepstral coefficients is not necessary for such tasks that only focus on the tone colors of sounds.
+Moreover, although spectrogram models do not perform as well as MFE or MFCC models during the pre-fitting stage, they seem to outperform the latter two after fine-tuning. This suggests that for instrumental sound clip classification tasks that transfer raw frequencies to spectrograms, deep learning models may perform better without reducing the higher frequency range or mimicking human perception. Additionally, incorporating cepstral coefficients may not be necessary and may overfit the training set by adding an extra dimension for such tasks that only focus on the tone colors of sounds (see table 1). 
 
 ### 7.4. further considerations
 If I had more time to work on this project, it could be further developed in the following ways:
 1. Adding more types of instruments to the collection.
 2. Incorporating more variations in tone for each instrument.
 3. Taking into consideration the factor of sound field. The position of different instruments has general guidelines and conventions, and often be engineered in electronic music production. This aspect may help us classify the instrument from its sound clip as an additional reference.
-4. Increase the amount of data.
+4. Increase the amount of data to be trained.
 
 
 ## 8. Appendix
