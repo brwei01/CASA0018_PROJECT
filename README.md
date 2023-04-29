@@ -20,7 +20,7 @@ The project has developed an application that can be deployed on an Arduino 33 B
   </tr>
 </table>
 
-*Figure 1. A demonstration of the application -- connect sensor and record the sound played by desktop. The sensor flashes differently on classification*
+*Figure 1. A demonstration of the application in Arduino IDE-- connect sensor and record the sound played by desktop. The sensor flashes differently on classification*
 
 
 ## 2. Research Question
@@ -36,7 +36,7 @@ This application components were Edge Impulse, Arduino BLE33 microphone and the 
 1. Generating files to update the firmware on Arduino BLE33 and make it ready for connection;
 2. Operating the sensor to sample data, and train-test set splitting of sampled data;
 3. Model building, training, and testing (with test set or live testing with new clips recorded);
-4. Generating model deployment solutions for Arduino sensor that can be runned by desktop shell command or the Arduino IDE.
+4. Generating model deployment solutions for Arduino sensor that can be runned in desktop terminal or the Arduino IDE.
 
 
 In terms of the hardwares, The Arduino BLE33 sensor that has recording functionality is required to be connected to a supportive desktop so that it can be operated through Edge Impulse in data sampling and live testing tasks, or the deployment through desktop shell command and Arduino IDE. A flow chart that illustrate the application build is shown in the flow chart below:
@@ -125,7 +125,7 @@ The project has explored different models with combinations of parameters. There
 <img width="833" alt="model comparison" src="https://user-images.githubusercontent.com/116358733/235237025-16423d96-53f8-4530-819c-e879e9810d4d.png">
 
 
-The data collected was first fitted with auto-tune Raw-feature, Spectrogram, MFE and MFCC models. The tuned parameters and results are shown in the table below. It can be noticed that, a raw-data model has given the worst accuracy of 60.3% in validation and 53.73% in test data by putting the raw frequency of audio signal into a neural network with 2 layers (less training cycles here is used to prevent overfit and uder performance on test data). By incorporating the technique of slicing up the continuous frequency into windows, making spectrogram by Fourier transform and stacking them up (the preprocessing blocks shared by Spectrogram, MFE and MFCC), the performance of the models has improved by over 16% on validation set and 10% on test set. 
+The data collected was first fitted with auto-tuned Raw-feature, Spectrogram, MFE and MFCC models. It can be noticed that, a raw-data model has given the worst accuracy of 60.3% in validation and 53.73% in test data by putting the raw frequency of audio signal into a neural network with 2 layers (less training cycles here is used to prevent overfit and uder performance on test data). By incorporating the technique of slicing up the continuous frequency into windows, making spectrogram by Fourier transform and stacking them up (the preprocessing blocks shared by Spectrogram, MFE and MFCC), the performance of the models has improved by over 16% on validation set and 10% on test set. 
 
 |model|training cycles|learning rate|validation score|test score|
 |---|---|---|---|---|
@@ -136,21 +136,18 @@ The data collected was first fitted with auto-tune Raw-feature, Spectrogram, MFE
 
 *Table 1: Comparison between 4 prefitted models.*
 
-According to the table, MFE has appeared to perform better compared to the Spectrogram and MFCC
-
-Another technique used here is configure the fine-tuning process by transfer learning under the EON block on Edge Impulse. The EON tuning tool identified a version of spectrogram models 'spectr-conv1d-6df' as the optimal choice with best performance on validation scores. However, the latency of the optimal model has exceeded the tuning target by 5389ms per inference even though it has the best accuracy scores. This version of Spectrogram model was used to update the previous blocks in my project and its parameters 'frames length', 'frame stride' and 'FFT length' are changed to investigate if better accuracy can be achieved. The results are logged in tables2. As can be seen in the table, the optimal window size (frame length) is 0.025 seconds. The comparisons between cases 1 and 2, 4 and 5 indicate that Overlappings between 2 neighbouring windows does not help in producing better results. 2 to 3 times peak RAM usage can be generated if 256 data point sampled in one frequency cycle compared to the cases where 128 are sampled. In addition, FFT length of 256 gives a better resolution but may cause overfitting in training data as can be observed in cases 3 and 8, where validation score improved by 1.6% and test score remain unchanged.
+Knowing that the windowing and Fourier transformation could greatly improve the model performance, the project has turned to transfer learning using the EON model pre-trained by Edge Impulse. By converting the raw signal collected to spectrograms via Fourier transformation, the resulting images can be analyzed for patterns using this large image classification model, which may leverage the strengths of both the Fourier transformation and the pre-trained EON model to better distinguish between different types of sounds. The EON tuning tool identified a version of spectrogram models 'spectr-conv1d-6df' as the optimal choice with best performance on validation scores. However, the latency of the optimal model has exceeded the tuning target by 5389ms per inference even though it has the best accuracy scores. This version of Spectrogram model was used to update the previous blocks in my project and its parameters 'frames length', 'frame stride' and 'FFT length' are changed to investigate if better accuracy can be achieved. The results are logged in tables2. As can be seen in the table, the optimal window size (frame length) is 0.025 seconds. The comparisons between cases 1 and 2, 4 and 5 indicate that Overlappings between 2 neighbouring windows does not help in producing better results. 2 to 3 times peak RAM usage can be generated if 256 data point sampled in one frequency cycle compared to the cases where 128 are sampled. In addition, FFT length of 256 gives a better resolution but may cause overfitting in training data as can be observed in case pairs 3 and 8, 4 and 9, where validation score improved by 1.6% and test score remain unchanged. The parameters in case 1 were adopted eventually.
 
 |index|Frame Length|Frame Stride|FFT length|validation score|test score|peak RAM|Flash Usage|
 |---|---|---|---|---|---|---|---|
 |1|0.025|0.025|128|85.7%|82.9%|11.9k|66.3k|
-|2|0.025|0.01|128|76.2%|71.64%|11.9|66.3|
-|3|0.01|0.01|128|79.4%|79.1%|19.5|67.3|
+|2|0.025|0.01|128|76.2%|71.64%|12.6k|69.1k|
+|3|0.01|0.01|128|79.4%|79.1%|19.5k|67.3k|
 |4|0.05|0.05|128|71.4%|76.12%|9.4k|66.1k|
 |5|0.05|0.025|128|76.2%|67.16%|11.8k|66.3k|
 |6|0.025|0.025|256|77.8%|82.09%|17.7k|69.3k|
 |8|0.01|0.01|256|81.0%|79.1%|32.8k|70.3k|
-|9|0.05|0.05|256|||||
-
+|9|0.05|0.05|256|76.2%|76.12%|12.6k|69.1k|
 
 *Table 2: Tuning Frame Length and Frame Stride.*
 
