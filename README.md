@@ -162,13 +162,6 @@ Knowing that the windowing and Fourier transformation could greatly improve the 
 
 *Table 2: Tuning Frame Length and Frame Stride.*
 
-The network structure is also experimented. The results are shown as follows:
-|network|Layers|kernel size|Validation Test Score(%)|Test Score(%)|
-|---|---|---|---|
-|spectr-conv1d-6df|16,32,64,128|3|86|78|
-|spectr-conv1d-001|32,64|3|78|78|
-|spectr-conv1d-c8b|32,64|3|76|70|
-
 
 
 ## 7. Results and Observations
