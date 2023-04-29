@@ -103,13 +103,13 @@ The data collected was first fitted with auto-tune Raw-feature, Spectrogram, MFE
 
 |model|training cycles|learning rate|training score|test score|
 |---|---|---|---|---|
-|raw-data|30|0.05|70%|70%|
-|spectrogram|100|0.005|70%|
-|MFE|100|0.005|76%|70%|
-|MFCC|100|0.005|76%|70%|
+|raw-data|30|0.05|60%|54%|
+|spectrogram|100|0.005|76%|64%|
+|MFE|100|0.005|79%|76%|
+|MFCC|100|0.005|78%|70%|
 
 
-The EON Tuning tool on Edge impulse was utilized to select the most suitable models, which identified the MFE and spectrogram models as the optimal choices. The spectrogram model outperformed the MFE model by approximately 4% on the test set and had lower performance latency. Given that the time windows were set as 1000ms, covering most of the time spans of the samples, the MFE appeared to have the same sampling range as the spectrogram model, which windowed over the entire time span of individual samples. This suggests that there was no need to be concerned about the spectrogram model not providing as much detail as the MFE. The performance of both models on the validation and test datasets is depicted on the subsequent slide.
+The EON Tuning tool on Edge impulse was utilized to select the most suitable models, which identified the MFE and spectrogram models as the optimal choices. The spectrogram models 一些数据的比较 Notably, the latency of the optimal model has exceeded the tuning target by 5389ms per inference even though it has the best accuracy scores.
 
 
 ## 7. Results and Observations
