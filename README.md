@@ -43,6 +43,7 @@ In terms of the hardwares, The Arduino BLE33 sensor that has recording functiona
 
 <img width="919" alt="build" src="https://user-images.githubusercontent.com/116358733/235211627-efc15b7f-ba03-4579-a8c7-375d4f2ccd2f.png">
 
+*Figure 2. Application build flowchart*
 
 
 ### 3.2. System requirements
@@ -70,16 +71,19 @@ Predictions (DSP: 33 ms., Classification: 31 ms., Anomaly: 0 ms.):
 
 <img width="1440" alt="include_library" src="https://user-images.githubusercontent.com/116358733/235211664-d6b8f58a-903a-4c9b-86df-109ae2c97a8a.png">
 
+*Figure 3. Include the model as library in Arduino IDE -- i*
 
 Then download and open up the sketch file '/nano_ble33_sense_microphone/nano_ble33_sense_microphone.ino', click upload button to run the application. The output can be monitored via Tools > Serial monitor where the signal processing pipeline can be started. The 'baud rate' is recommended to be set at 115200, which indicates the data sent by the Arduino board will be transmitted at a speed of 115,200 bits per second.
 
 <img width="1190" alt="serial_monitor" src="https://user-images.githubusercontent.com/116358733/235299015-a880b845-2aa6-498d-aafe-89b817e84ef4.png">
 
+*Figure 4. Run the model and monitor outputs in Arduino IDE*
 
-This option to deploy the model as an Arduino library has a new feature that the classification result can be observed through different flashing behaviours of the device: It is set to flash once for 1000ms if the result is 'kick' and to flash 5 times for 50ms each time if the result indicates 'tom'. 
+This option to deploy the model as an Arduino library has a new feature that the classification result can be observed through different flashing behaviours of the on board LED: It is set to flash once for 1000ms if the result is 'kick' and to flash 5 times for 50ms each time if the result indicates 'tom'. 
 
 <img width="854" alt="flash_behaviour" src="https://user-images.githubusercontent.com/116358733/235215069-7017717d-969e-41b2-ae14-2cd99c713c81.png">
 
+*Figure 5. different LED flash pattern on classification*
 
 
 ## 4. Data 
@@ -92,6 +96,8 @@ The data are sampled from mainly 2 sources: demo clips from Splice Sounds and se
   </tr>
 </table>
 
+*Figure 6. Data Sampling and train-test splitting*
+
 These latter preprocessing steps are implemented within the models building processes and are going to be introduced in the 'Experiments' section.
 
 
@@ -99,6 +105,8 @@ These latter preprocessing steps are implemented within the models building proc
 The model architecture chosen is a Spectrogram model with 4 1-dimensional convolutional neural network. The model requires 4 hyperparameters: Frame length, Frame stride and FFT length. Frame length was set as 0.025 second, indicating the length of segments when performing windowing over each record. Frame stride was decided as 0.025 second, meaning that the neighbouring two windows does not have any overlapping. FFT length is decided as 128, meaning that within each cycle on the frequency chart, 128 sample points are taken to represent the oscillation during the period of time within the cycle (detailed information please refer to appendix[iii]). This process of how raw data is processed through setting these parameters is shown here:
 
 <img width="1035" alt="flowchart_data_preprocessing" src="https://user-images.githubusercontent.com/116358733/235274762-87ec8590-046a-47b3-9a90-fffdfc9af228.png">
+
+*Figure 7. Data preprocessing in selected model*
 
 In the next steps, the preprocessed data samples are put into the neural network that is structured as shown in the image below. The 2600 features processed from the last step as the input layer was firstly reshaped into 65 columns. The reshaped layer was then applied to 4 1D-convolutional layers all with a convolution kernel size of 3, and containing neurons of 16, 32, 64 and 128 respectively. Relu was used as activation function after each layer. The features then goes into a flatten layer and a dropout layer (with rate 0.5) to output the features into 2 categories. The training process consisted of 100 cycles at a learning rate of 0.005. The optimization method chosen is Adam.
 
@@ -112,11 +120,13 @@ In the next steps, the preprocessed data samples are put into the neural network
   </tr>
 </table>
 
+*Figure 8. Model architecture*
 
 Lastly, the deployment of the model on an Arduino have produced a report for peak RAM usage of 11.9kb and a flash usages of 66.3kb were found to be moderate, indicating that the model was relatively lightweight and suitable for such kind of sensor (with 1MB flash and 256kb SRAM).
 
 <img width="471" alt="on_device_performance" src="https://user-images.githubusercontent.com/116358733/235273576-6c03c3cb-7372-4073-a0f8-874ac6e6fb1f.png">
 
+*Figure 9. Report of on device performance*
 
 ## 6. Experiments 
 
@@ -124,6 +134,7 @@ The project has explored different models with combinations of parameters. There
 
 <img width="833" alt="model comparison" src="https://user-images.githubusercontent.com/116358733/235237025-16423d96-53f8-4530-819c-e879e9810d4d.png">
 
+*Figure 9. Data preprocessing in Spectrogram, MFE and MFCC models*
 
 The data collected was first fitted with auto-tuned Raw-feature, Spectrogram, MFE and MFCC models. It can be noticed that, a raw-data model has given the worst accuracy of 60.3% in validation and 53.73% in test data by putting the raw frequency of audio signal into a neural network with 2 layers (less training cycles here is used to prevent overfit and uder performance on test data). By incorporating the technique of slicing up the continuous frequency into windows, making spectrogram by Fourier transform and stacking them up (the preprocessing blocks shared by Spectrogram, MFE and MFCC), the performance of the models has improved by over 16% on validation set and 10% on test set. 
 
@@ -164,7 +175,8 @@ the results of the model selected are shown below. Spectr-conv1d-6df has produce
 </td>
   </tr>
 </table>
-*Figure 1: Model results on validation set and test set.*
+
+*Figure 10: Model results on validation set and test set.*
 
 ### 7.2. comparison and improvement to the demo task
 
@@ -178,6 +190,7 @@ The model was broadly tested by a wide range of sound clips labeled toms and kic
 
 <img width="946" alt="mc_kick_reson" src="https://user-images.githubusercontent.com/116358733/234876502-af5544a2-1b04-45b6-a801-41c3e5366c61.png">
 
+*Figure 11: An example of false classification*
 
 Moreover, although spectrogram models do not perform as well as MFE or MFCC models during the pre-fitting stage, they seem to outperform the latter two after fine-tuning. This suggests that for instrumental sound clip classification tasks that transfer raw frequencies to spectrograms, deep learning models may perform better without reducing the higher frequency range or mimicking human perception. Additionally, incorporating cepstral coefficients may not be necessary and may overfit the training set by adding an extra dimension for such tasks that only focus on the tone colors of sounds (see table 1). 
 
