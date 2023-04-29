@@ -108,7 +108,7 @@ The model architecture chosen is a Spectrogram model with 4 1-dimensional convol
 
 *Figure 7. Data preprocessing in selected model*
 
-In the next steps, the preprocessed data samples are put into the neural network that is structured as shown in the image below. The 2600 features processed from the last step as the input layer was firstly reshaped into 65 columns for data augumentation purposes. The reshaped layer was then applied to 4 1D-convolutional layers all with a convolution kernel size of 3, and containing neurons of 16, 32, 64 and 128 respectively. Relu was used as activation function after each layer. The features then goes into a flatten layer and a dropout layer (with rate 0.5) to output the features into 2 categories. The training process consisted of 100 cycles at a learning rate of 0.005. The optimization method chosen is Adam.
+In the next steps, the preprocessed data samples are put into the neural network that is structured as shown in the image below. The 2600 features processed from the last step as the input layer was firstly reshaped into 65 columns. The reshaped layer was then applied to 4 1D-convolutional layers all with a convolution kernel size of 3, and containing neurons of 16, 32, 64 and 128 respectively. Relu was used as activation function after each layer. The features then goes into a flatten layer and a dropout layer (with rate 0.5) to output the features into 2 categories. The training process consisted of 100 cycles at a learning rate of 0.005. The optimization method chosen is Adam.
 
 <table>
   <tr>
@@ -161,6 +161,14 @@ Knowing that the windowing and Fourier transformation could greatly improve the 
 |8|0.05|0.05|256|76.2%|76.12%|12.6k|69.1k|
 
 *Table 2: Tuning Frame Length and Frame Stride.*
+
+The network structure is also experimented. The results are shown as follows:
+|network|Layers|kernel size|Validation Test Score(%)|Test Score(%)|
+|---|---|---|---|
+|spectr-conv1d-6df|16,32,64,128|3|86|78|
+|spectr-conv1d-001|32,64|3|78|78|
+|spectr-conv1d-c8b|32,64|3|76|70|
+
 
 
 ## 7. Results and Observations
