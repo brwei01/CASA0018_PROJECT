@@ -165,7 +165,8 @@ If I had more time to work on this project, it could be further developed in the
 
 - Splice Sounds: https://splice.com/sounds/labels/splice
 - Arduino Nano 33BLE Sense technical guide: https://docs.edgeimpulse.com/docs/development-platforms/officially-supported-mcu-targets/arduino-nano-33-ble-sense
-- 
+- Arduino Library: https://docs.edgeimpulse.com/docs/deployment/arduino-library
+- Recognize sounds from audio: https://docs.edgeimpulse.com/docs/tutorials/audio-classification
 
 
 ## 10. Authorship
