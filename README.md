@@ -95,7 +95,7 @@ These latter preprocessing steps are implemented within the models building proc
 
 
 ## 5. Model
-The model architecture chosen is a Spectrogram model with 4 1-dimensional convolutional neural network. The model requires 4 hyperparameters: Frame length, Frame stride and FFT length. Frame length was set as 0.025 second, indicating the length of segments when performing windowing over each record. Frame stride was decided as 0.025 second, meaning that the neighbouring two windows does not have any overlapping. FFT length is decided as 128, meaning that within each cycle on the frequency chart, 128 sample points are taken to represent the oscillation during the period of time within the cycle (detailed information please refer to [NUMBER]). This process of how raw data is processed through setting these parameters is shown here:
+The model architecture chosen is a Spectrogram model with 4 1-dimensional convolutional neural network. The model requires 4 hyperparameters: Frame length, Frame stride and FFT length. Frame length was set as 0.025 second, indicating the length of segments when performing windowing over each record. Frame stride was decided as 0.025 second, meaning that the neighbouring two windows does not have any overlapping. FFT length is decided as 128, meaning that within each cycle on the frequency chart, 128 sample points are taken to represent the oscillation during the period of time within the cycle (detailed information please refer to appendix.[3]). This process of how raw data is processed through setting these parameters is shown here:
 
 <img width="1035" alt="flowchart_data_preprocessing" src="https://user-images.githubusercontent.com/116358733/235274762-87ec8590-046a-47b3-9a90-fffdfc9af228.png">
 
@@ -119,7 +119,7 @@ Lastly, the deployment of the model on an Arduino have produced a report for pea
 
 ## 6. Experiments 
 
-The project has explored different models with combinations of parameters. There are mainly 3 models suitable for audio processing on Edge Impulse: MFE, MFCC and Spectrogram. These models mainly differentiates in data preprocessing. All models takes the approach of windowing and fourier transformation so that the continuous signal are clipped into smaller segments with smooth edges. The MFE model further puts a filter over signal collected to imitate the human hearing ability. Based on this filter, the MFCC model extracts information in a higher dimension (contains more features) by considering the shape of the spectrum (more detailed information please refer to [NUMBER]). A illustration of the differences of the 3 models is shown as follows.
+The project has explored different models with combinations of parameters. There are mainly 3 models suitable for audio processing on Edge Impulse: MFE, MFCC and Spectrogram. These models mainly differentiates in data preprocessing. All models takes the approach of windowing and fourier transformation so that the continuous signal are clipped into smaller segments with smooth edges. The MFE model further puts a filter over signal collected to imitate the human hearing ability. Based on this filter, the MFCC model extracts information in a higher dimension (contains more features) by considering the shape of the spectrum (more detailed information please refer to appendix[3]). A illustration of the differences of the 3 models is shown as follows.
 
 <img width="833" alt="model comparison" src="https://user-images.githubusercontent.com/116358733/235237025-16423d96-53f8-4530-819c-e879e9810d4d.png">
 
@@ -132,11 +132,31 @@ The data collected was first fitted with auto-tune Raw-feature, Spectrogram, MFE
 |spectrogram|100|0.005|76%|64%|
 |MFE|100|0.005|79%|76%|
 |MFCC|100|0.005|78%|70%|
+
 *Table 1: Comparison between 4 prefitted models.*
 
-According to the table, MFE has appeared to perform better compared to the Spectrogram and MFCC. The 
+According to the table, MFE has appeared to perform better compared to the Spectrogram and MFCC. 
 
-The EON Tuning tool on Edge impulse was utilized to select the most suitable models, which identified the MFE and spectrogram models as the optimal choices. The spectrogram models 一些数据的比较 Notably, the latency of the optimal model has exceeded the tuning target by 5389ms per inference even though it has the best accuracy scores.
+Another technique used here is transfer learning through the EON block on Edge Impulse. The EON tuning tool identified a version of spectrogram models 'spectr-conv1d-6df' as the optimal choice with best performance on validation scores. However, the latency of the optimal model has exceeded the tuning target by 5389ms per inference even though it has the best accuracy scores. This version of Spectrogram model was used to update the previous blocks in my project and its parameters 'frames length', 'frame stride' and 'FFT length' are changed to investigate if better accuracy can be achieved.
+
+
+|index|Frame Length|Frame Stride|FFT length|validation score|test score|peak RAM|Flash Usage|
+|---|---|---|---|---|---|
+|1|0.025|0.025|128|85.7%|82.9%|11.9k|66.3k|
+|2|0.025|0.01|128|76.2%|71.64%|11.9|66.3|
+|3|0.01|0.01|128|79.4%|79.1%|19.5|67.3|
+|4|0.05|0.05|128|71.4%|79.4%|9.4k|66.1k|
+|5|0.05|0.025|128|78%|79.4%|||
+
+|6|0.025|0.025|256|79.4%|79.1%|19.5|67.3|
+|7|0.025|0.01|256|79.4%|79.1%|19.5|67.3|
+|8|0.01|0.01|256|81.0%|79.1%|32.8k|70.3k|
+|9|0.05|0.05|256|79.4%|79.1%|19.5|67.3|
+|5|0.05|0.025|128|78%|79.4%|||
+
+
+
+*Table 2: Tuning Frame Length and Frame Stride.*
 
 
 ## 7. Results and Observations
@@ -163,11 +183,10 @@ In the final project, audio clips are recorded directly by the Arduino sensor wi
 
 
 ### 7.3. observations 
-The model was broadly tested by a wide range of sound clips labeled toms and kicks. And these test samples are also characterized in their names as 'cinematic', 'acoustic' etc, which may indicate these clips are quite different in design even within each label. Utilizing the variety of clips can be  It was noticed that the differece in resnotation and change in frequencies of the two types of sounds are well captured by the model. In the two examples below, a kick that appears to have longer resonation was misclassified as tom, and a tom that has shorter resonation was misclassified as kick.
+The model was broadly tested by a wide range of sound clips labeled toms and kicks. And these test samples are also characterized in their names as 'cinematic', 'acoustic' etc, which may indicate these clips are quite different in design even within each label. Utilizing the variety of clips can be  It was noticed that the differece in resnotation and change in frequencies of the two types of sounds are well captured by the model. The figure below shows, a kick that appears to have longer resonation (can be engineered by managing decay and release, please refer to appendix[3] for detailed information) was misclassified as tom, and vice versa, a tom that has shorter resonation and sooner attack can be misclassified as kick.
 
 <img width="946" alt="mc_kick_reson" src="https://user-images.githubusercontent.com/116358733/234876502-af5544a2-1b04-45b6-a801-41c3e5366c61.png">
 
-Another example shows how a kick with obvious change in frequency(pitch) can be misclassified as
 
 Moreover, although spectrogram models do not perform as well as MFE or MFCC models during the pre-fitting stage, they seem to outperform the latter two after fine-tuning. This suggests that for instrumental sound clip classification tasks that transfer raw frequencies to spectrograms, deep learning models may perform better without reducing the higher frequency range or mimicking human perception. Additionally, incorporating cepstral coefficients may not be necessary and may overfit the training set by adding an extra dimension for such tasks that only focus on the tone colors of sounds (see table 1). 
 
@@ -180,10 +199,10 @@ If I had more time to work on this project, it could be further developed in the
 
 
 ## 8. Appendix
-- the project on edge impulse: https://studio.edgeimpulse.com/public/217672/latest
-- the demo project on edge impulse: https://studio.edgeimpulse.com/public/199755/latest
-- Demo task presentation1: https://www.youtube.com/watch?v=_bu1VxgMrQs&t=562s
-- Demo task presentation2: https://www.youtube.com/watch?v=WKzNbHNQhQc&t=323s
+- 1. the project on edge impulse: https://studio.edgeimpulse.com/public/217672/latest
+- 2. the demo project on edge impulse: https://studio.edgeimpulse.com/public/199755/latest
+- 3. Demo task presentation1: https://www.youtube.com/watch?v=_bu1VxgMrQs&t=562s
+- 4. Demo task presentation2: https://www.youtube.com/watch?v=WKzNbHNQhQc&t=323s
 
 ## 9. References and Resources
 
@@ -192,6 +211,7 @@ If I had more time to work on this project, it could be further developed in the
 - Arduino Library: https://docs.edgeimpulse.com/docs/deployment/arduino-library
 - Recognize sounds from audio: https://docs.edgeimpulse.com/docs/tutorials/audio-classification
 - https://store.arduino.cc/products/nano-33-ble-sense-rev2?gclid=Cj0KCQjwgLOiBhC7ARIsAIeetVBhlAOKVwvvmz9SACyagg8Fqprz_yf8vFp8xQK5vKkbtoibmFFnEuwaAjjUEALw_wcB
+- EON Tuner: https://docs.edgeimpulse.com/docs/edge-impulse-studio/eon-tuner
 
 
 ## 10. Declaration of Authorship
