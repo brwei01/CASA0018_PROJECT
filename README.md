@@ -111,6 +111,7 @@ Lastly, the deployment of the model on an Arduino device was discussed. The peak
 ## 7. Results and Observations
 
 ### 7.1. Results
+the results of the model selected are shown below. Spectr-conv1d-6df has produced an accuracy of 85.7% on validation set and 82.09% on test set. The results may indicate a relative high reliability of the model in classifying sound clips engineered for 'kicks' and 'toms'.
 <table>
   <tr>
     <td><img width="570" alt="final_model_result" src="https://user-images.githubusercontent.com/116358733/235264560-bd201ce6-aaeb-4bf3-9b18-b5d14934eb87.png">
