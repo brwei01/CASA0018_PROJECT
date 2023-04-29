@@ -83,7 +83,7 @@ This option to deploy the model as an Arduino library has a new feature that the
 
 
 ## 4. Data 
-The data are sampled from mainly 2 sources: demo clips from Splice Sounds and self-contained audio sources from Ableton Live Suite 10 [1]. The sound clips labeled as 'kicks' and 'toms' are played on the desktop and recorded by Arduino Nano BLE33 built-in microphone. The signal recorded was then transmitted and uploaded to Edge Impulse platform, where labels can be given according to their orginal groups and a preview of the shapes of the signals can be presented. The data samples are collected as sound clips of 15000 miliseconds at 16000 hertz. The sampling rate is decided to satisfy the Nyquist's theorem for all samples. (for detailed information please refer to [NUMBER]) Around 80% of the data (313 records) was splitted as training set and 20% (84 records) as test set, and in total they account for 10m10s of audio recording.
+The data are sampled from mainly 2 sources: demo clips from Splice Sounds and self-contained audio sources from Ableton Live Suite 10 [1]. The sound clips labeled as 'kicks' and 'toms' are played on the desktop and recorded by Arduino Nano BLE33 built-in microphone. The signal recorded was then transmitted and uploaded to Edge Impulse platform, where labels can be given according to their orginal groups and a preview of the shapes of the signals can be presented. The data samples are collected as sound clips of 15000 miliseconds at 16000 hertz. The sampling rate is decided to satisfy the Nyquist's theorem for all samples. (for detailed information please refer to appendix[iii]) Around 80% of the data (313 records) was splitted as training set and 20% (84 records) as test set, and in total they account for 10m10s of audio recording.
 <table>
   <tr>
     <td><img width="794" alt="train_test_split_rate" src="https://user-images.githubusercontent.com/116358733/235218284-82d79bd5-8fc1-49a6-89c6-42e20a09ebd1.png"></td>
@@ -112,14 +112,14 @@ In the next steps, the preprocessed data samples are put into the neural network
 </table>
 
 
-Lastly, the deployment of the model on an Arduino have produced a report for peak RAM usage of 11.9kb and a flash usages of 66.3kb were found to be moderate, indicating that the model was relatively lightweight and suitable for such kind of sensor (with 1MB flash and 256kb SRAM [NUMBER]).
+Lastly, the deployment of the model on an Arduino have produced a report for peak RAM usage of 11.9kb and a flash usages of 66.3kb were found to be moderate, indicating that the model was relatively lightweight and suitable for such kind of sensor (with 1MB flash and 256kb SRAM).
 
 <img width="471" alt="on_device_performance" src="https://user-images.githubusercontent.com/116358733/235273576-6c03c3cb-7372-4073-a0f8-874ac6e6fb1f.png">
 
 
 ## 6. Experiments 
 
-The project has explored different models with combinations of parameters. There are mainly 3 models suitable for audio processing on Edge Impulse: MFE, MFCC and Spectrogram. These models mainly differentiates in data preprocessing. All models takes the approach of windowing and fourier transformation so that the continuous signal are clipped into smaller segments with smooth edges. The MFE model further puts a filter over signal collected to imitate the human hearing ability. Based on this filter, the MFCC model extracts information in a higher dimension (contains more features) by considering the shape of the spectrum (more detailed information please refer to appendix[3]). A illustration of the differences of the 3 models is shown as follows.
+The project has explored different models with combinations of parameters. There are mainly 3 models suitable for audio processing on Edge Impulse: MFE, MFCC and Spectrogram. These models mainly differentiates in data preprocessing. All models takes the approach of windowing and fourier transformation so that the continuous signal are clipped into smaller segments with smooth edges. The MFE model further puts a filter over signal collected to imitate the human hearing ability. Based on this filter, the MFCC model extracts information in a higher dimension (contains more features) by considering the shape of the spectrum (more detailed information please refer to appendix[iii]). A illustration of the differences of the 3 models is shown as follows.
 
 <img width="833" alt="model comparison" src="https://user-images.githubusercontent.com/116358733/235237025-16423d96-53f8-4530-819c-e879e9810d4d.png">
 
@@ -135,10 +135,9 @@ The data collected was first fitted with auto-tune Raw-feature, Spectrogram, MFE
 
 *Table 1: Comparison between 4 prefitted models.*
 
-According to the table, MFE has appeared to perform better compared to the Spectrogram and MFCC. 
+According to the table, MFE has appeared to perform better compared to the Spectrogram and MFCC
 
-Another technique used here is transfer learning through the EON block on Edge Impulse. The EON tuning tool identified a version of spectrogram models 'spectr-conv1d-6df' as the optimal choice with best performance on validation scores. However, the latency of the optimal model has exceeded the tuning target by 5389ms per inference even though it has the best accuracy scores. This version of Spectrogram model was used to update the previous blocks in my project and its parameters 'frames length', 'frame stride' and 'FFT length' are changed to investigate if better accuracy can be achieved.
-
+Another technique used here is configure the fine-tuning process by transfer learning under the EON block on Edge Impulse. The EON tuning tool identified a version of spectrogram models 'spectr-conv1d-6df' as the optimal choice with best performance on validation scores. However, the latency of the optimal model has exceeded the tuning target by 5389ms per inference even though it has the best accuracy scores. This version of Spectrogram model was used to update the previous blocks in my project and its parameters 'frames length', 'frame stride' and 'FFT length' are changed to investigate if better accuracy can be achieved. The results are logged in tables2. As can be seen in the table, the optimal window size (frame length) is 0.025 seconds. The comparisons between cases 1 and 2, 4 and 5 indicate that Overlappings between 2 neighbouring windows does not help in producing better results. 2 to 3 times peak RAM usage can be generated if 256 data point sampled in one frequency cycle compared to the cases where 128 are sampled. In addition, FFT length of 256 gives a better resolution but may cause overfitting in training data as can be observed in cases 3 and 8, where validation score improved by 1.6% and test score remain unchanged.
 
 |index|Frame Length|Frame Stride|FFT length|validation score|test score|peak RAM|Flash Usage|
 |---|---|---|---|---|---|---|---|
@@ -146,14 +145,10 @@ Another technique used here is transfer learning through the EON block on Edge I
 |2|0.025|0.01|128|76.2%|71.64%|11.9|66.3|
 |3|0.01|0.01|128|79.4%|79.1%|19.5|67.3|
 |4|0.05|0.05|128|71.4%|76.12%|9.4k|66.1k|
-|5|0.05|0.025|128|78%|79.4%|||
-
-|6|0.025|0.025|256|79.4%|79.1%|19.5|67.3|
-|7|0.025|0.01|256|79.4%|79.1%|19.5|67.3|
+|5|0.05|0.025|128|76.2%|67.16%|11.8k|66.3k|
+|6|0.025|0.025|256|77.8%|82.09%|17.7k|69.3k|
 |8|0.01|0.01|256|81.0%|79.1%|32.8k|70.3k|
-|9|0.05|0.05|256|79.4%|79.1%|19.5|67.3|
-|5|0.05|0.025|128|78%|79.4%|||
-
+|9|0.05|0.05|256|||||
 
 
 *Table 2: Tuning Frame Length and Frame Stride.*
