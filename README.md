@@ -136,7 +136,7 @@ The project has explored different models with combinations of parameters. There
 
 *Figure 9. Data preprocessing in Spectrogram, MFE and MFCC models*
 
-The data collected was first fitted with auto-tuned Raw-feature, Spectrogram, MFE and MFCC models. It can be noticed that, a raw-data model has given the worst accuracy of 60.3% in validation and 53.73% in test data by putting the raw frequency of audio signal into a neural network with 2 layers (less training cycles here is used to prevent overfit and uder performance on test data). By incorporating the technique of slicing up the continuous frequency into windows, making spectrogram by Fourier transform and stacking them up (the preprocessing blocks shared by Spectrogram, MFE and MFCC), the performance of the models has improved by over 16% on validation set and 10% on test set. 
+The data collected was first fitted with auto-tuned Raw-feature, Spectrogram, MFE and MFCC models. It can be noticed that, a raw-data model has given the worst accuracy of 60.3% in validation and 53.73% in test data by putting the raw frequency of audio signal into a neural network with 2 layers (less training cycles here is used to prevent overfit and under performance on test data). By incorporating the technique of slicing up the continuous frequency into windows, making spectrogram by Fourier transform and stacking them up (the preprocessing blocks shared by Spectrogram, MFE and MFCC), the performance of the models has improved by over 16% on validation set and 10% on test set. 
 
 |model|training cycles|learning rate|validation score|test score|
 |---|---|---|---|---|
