@@ -13,8 +13,7 @@ The project has developed an application that can be deployed on an Arduino 33 B
 
 <table>
   <tr>
-    <td><img width="1440" alt="interface" src="https://user-images.githubusercontent.com/116358733/235301565-036a0d1b-3635-49b6-80e9-5802708b57b7.png">
-
+    <td><img width="1436" alt="interface" src="https://user-images.githubusercontent.com/116358733/235301852-d6b75581-eb09-408c-92c7-d1ff8bf77a81.png">
 </td>
     <td><img width="530" alt="sensor" src="https://user-images.githubusercontent.com/116358733/235301799-1823afaf-aa74-47b0-8fb0-efd7350e279d.png">
 </td>
