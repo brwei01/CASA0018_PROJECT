@@ -55,14 +55,17 @@ Predictions (DSP: 33 ms., Classification: 31 ms., Anomaly: 0 ms.):
 
 
 2. A library for Arduino IDE -- By downloading the zip file named 'ei-drum-rack-arduino-1.0.2.zip' to the local. This zip file can then be included as a library in Arduino IDE. 
+
 <img width="1440" alt="include_library" src="https://user-images.githubusercontent.com/116358733/235211664-d6b8f58a-903a-4c9b-86df-109ae2c97a8a.png">
 
 
 Then download and open up the sketch file '/nano_ble33_sense_microphone/nano_ble33_sense_microphone.ino', click upload button to run the application. The output can be monitored via Tools > Serial monitor where the signal processing pipeline can be started. The 'baud rate' is recommended to be set at 115200, which indicates the data sent by the Arduino board will be transmitted at a speed of 115,200 bits per second.
+
 <img width="1190" alt="Screenshot 2023-04-28 at 18 15 35" src="https://user-images.githubusercontent.com/116358733/235212827-b0f99875-8653-44bf-bfdb-4c73e50e4f1b.png">
 
 
 This option to deploy the model as an Arduino library has a new feature that the classification result can be observed through different flashing behaviours of the device: It is set to flash once for 1000ms if the result is 'kick' and to flash 5 times for 50ms each time if the result indicates 'tom'. 
+
 <img width="854" alt="flash_behaviour" src="https://user-images.githubusercontent.com/116358733/235215069-7017717d-969e-41b2-ae14-2cd99c713c81.png">
 
 
@@ -96,6 +99,7 @@ Lastly, the deployment of the model on an Arduino have produced a report for pea
 ## 6. Experiments 
 
 The project has explored different models with combinations of parameters. There are mainly 3 models suitable for audio processing on Edge Impulse: MFE, MFCC and Spectrogram. These models mainly differentiates in data preprocessing. All models takes the approach of windowing and fourier transformation so that the continuous signal are clipped into smaller segments with smooth edges. The MFE model further puts a filter over signal collected to imitate the human hearing ability. Based on this filter, the MFCC model extracts information in a higher dimension (contains more features) by considering the shape of the spectrum (more detailed information please refer to [NUMBER]). A illustration of the differences of the 3 models is shown as follows.
+
 <img width="833" alt="model comparison" src="https://user-images.githubusercontent.com/116358733/235237025-16423d96-53f8-4530-819c-e879e9810d4d.png">
 
 
