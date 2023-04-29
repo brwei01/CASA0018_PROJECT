@@ -127,7 +127,7 @@ The demo task focused on exploring how to extract features from different sound 
 
 However, this model may not perform well in the final project due to three main reasons: 1. It does not consider background noise and signal loss during transmission when the model is deployed on a sensor. 2. Collecting background noise (either from the environment or by looping back audio data) to imitate the real-world scenario of a sensor collecting data would require additional workload; 3. The data amount (1m17s) was relatively insufficient.
 
-In the final project, audio clips are recorded directly by the Arduino sensor with background noise, which can be beneficial for several reasons: 1. It accounts for signal loss during transmission through air, allowing the model to focus on distinguishing different instruments; 2. it uses the same sensor to collect data directly on which the model will later be deployed, potentially leading to better performance; 3. the data amount has increased from 1m17s to 10m10s.
+In the final project, audio clips are recorded directly by the Arduino sensor with background noise, which can be beneficial for several reasons: 1. It accounts for signal loss during transmission through air, allowing the model to focus on distinguishing different instruments; 2. it uses the same sensor to collect data directly on which the model will later be deployed, potentially leading to better performance; 3. By keeping the time span with pure noise before the instrument comes in, the model can better capture the attack of the sound and may extract valuable features; 4. the data amount has increased from 1m17s to 10m10s.
 
 
 ### 7.3. observations 
