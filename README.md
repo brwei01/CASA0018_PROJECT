@@ -81,10 +81,15 @@ These latter preprocessing steps are implemented within the models building proc
 
 ## 5. Model
 The model architecture chosen is a Spectrogram model with 4 1-dimensional convolutional neural network (refered to as 'Spectr-conv1d-6df' on Edge Impulse). The model requires 4 hyperparameters: Frame length, Frame stride and FFT length. Frame length was set as 0.025 second, indicating the length of segments when performing windowing over each record. Frame stride was decided as 0.025 second, meaning that the neighbouring two windows does not have any overlapping. FFT length is decided as 128, meaning that within each cycle on the frequency chart, 128 sample points are taken to represent the oscillation during the period of time within the cycle. This process of how raw data is processed through setting these parameters is shown here:
+
 <img width="1035" alt="flowchart_data_preprocessing" src="https://user-images.githubusercontent.com/116358733/235274762-87ec8590-046a-47b3-9a90-fffdfc9af228.png">
+
 In the next steps, the preprocessed data samples are put into the neural. The neural network is structured as shown in the image below. The 2600 features processed from the last step as the input layer was firstly reshaped into 65 columns. The reshaped layer was then applied to 4 1D-convolutional layers all with a kernel size of 3, and containing neurons of 16, 32, 64 and 128 respectively. The features then goes into a flatten layer and a dropout layer (with rate 0.5) to output the features into 2 categories. The training process consisted of 100 cycles at a learning rate of 0.005.
+
 <img width="464" alt="model_architecture" src="https://user-images.githubusercontent.com/116358733/235273595-be393fd7-5222-4337-a8f6-a2844a3e652b.png">
+
 Lastly, the deployment of the model on an Arduino have produced a report for peak RAM and flash usages. And these were found to be moderate, indicating that the model was relatively lightweight and suitable for such kind of sensor.
+
 <img width="471" alt="on_device_performance" src="https://user-images.githubusercontent.com/116358733/235273576-6c03c3cb-7372-4073-a0f8-874ac6e6fb1f.png">
 
 
