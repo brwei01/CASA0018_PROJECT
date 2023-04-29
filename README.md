@@ -61,7 +61,7 @@ Predictions (DSP: 33 ms., Classification: 31 ms., Anomaly: 0 ms.):
 
 Then download and open up the sketch file '/nano_ble33_sense_microphone/nano_ble33_sense_microphone.ino', click upload button to run the application. The output can be monitored via Tools > Serial monitor where the signal processing pipeline can be started. The 'baud rate' is recommended to be set at 115200, which indicates the data sent by the Arduino board will be transmitted at a speed of 115,200 bits per second.
 
-<img width="1190" alt="Screenshot 2023-04-28 at 18 15 35" src="https://user-images.githubusercontent.com/116358733/235212827-b0f99875-8653-44bf-bfdb-4c73e50e4f1b.png">
+<img width="1190" alt="serial_monitor" src="https://user-images.githubusercontent.com/116358733/235299015-a880b845-2aa6-498d-aafe-89b817e84ef4.png">
 
 
 This option to deploy the model as an Arduino library has a new feature that the classification result can be observed through different flashing behaviours of the device: It is set to flash once for 1000ms if the result is 'kick' and to flash 5 times for 50ms each time if the result indicates 'tom'. 
@@ -87,7 +87,7 @@ The model architecture chosen is a Spectrogram model with 4 1-dimensional convol
 
 <img width="1035" alt="flowchart_data_preprocessing" src="https://user-images.githubusercontent.com/116358733/235274762-87ec8590-046a-47b3-9a90-fffdfc9af228.png">
 
-In the next steps, the preprocessed data samples are put into the neural. The neural network is structured as shown in the image below. The 2600 features processed from the last step as the input layer was firstly reshaped into 65 columns. The reshaped layer was then applied to 4 1D-convolutional layers all with a kernel size of 3, and containing neurons of 16, 32, 64 and 128 respectively. The features then goes into a flatten layer and a dropout layer (with rate 0.5) to output the features into 2 categories. The training process consisted of 100 cycles at a learning rate of 0.005.
+In the next steps, the preprocessed data samples are put into the neural. The neural network is structured as shown in the image below. The 2600 features processed from the last step as the input layer was firstly reshaped into 65 columns. The reshaped layer was then applied to 4 1D-convolutional layers all with a convolution kernel size of 3, and containing neurons of 16, 32, 64 and 128 respectively. Relu was used as activation function after each layer. The features then goes into a flatten layer and a dropout layer (with rate 0.5) to output the features into 2 categories. The training process consisted of 100 cycles at a learning rate of 0.005. The optimization method chosen to use is Adam.
 
 <table>
   <tr>
@@ -112,15 +112,16 @@ The project has explored different models with combinations of parameters. There
 <img width="833" alt="model comparison" src="https://user-images.githubusercontent.com/116358733/235237025-16423d96-53f8-4530-819c-e879e9810d4d.png">
 
 
-The data collected was first fitted with auto-tune Raw-feature, Spectrogram, MFE and MFCC models. The tuned parameters and results are shown in the table below. It can be noticed that, a raw-data model has given the worst accuracy of 60.3% in validation and 53.73% in test data. 
+The data collected was first fitted with auto-tune Raw-feature, Spectrogram, MFE and MFCC models. The tuned parameters and results are shown in the table below. It can be noticed that, a raw-data model has given the worst accuracy of 60.3% in validation and 53.73% in test data by putting the raw frequency of audio signal into a neural network with 2 layers (less training cycles here is used to prevent overfit and uder performance on test data). By incorporating the technique of slicing up the continuous frequency into windows, making spectrogram by Fourier transform and stacking them up (the preprocessing blocks shared by Spectrogram, MFE and MFCC), the performance of the models has improved by over 16% on validation set and 10% on test set. 
 
-|model|training cycles|learning rate|training score|test score|
+|model|training cycles|learning rate|validation score|test score|
 |---|---|---|---|---|
 |raw-data|30|0.05|60%|54%|
 |spectrogram|100|0.005|76%|64%|
 |MFE|100|0.005|79%|76%|
 |MFCC|100|0.005|78%|70%|
 
+The MFE model have
 
 The EON Tuning tool on Edge impulse was utilized to select the most suitable models, which identified the MFE and spectrogram models as the optimal choices. The spectrogram models 一些数据的比较 Notably, the latency of the optimal model has exceeded the tuning target by 5389ms per inference even though it has the best accuracy scores.
 
