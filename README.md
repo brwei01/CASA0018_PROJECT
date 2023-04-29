@@ -141,11 +141,11 @@ Another technique used here is transfer learning through the EON block on Edge I
 
 
 |index|Frame Length|Frame Stride|FFT length|validation score|test score|peak RAM|Flash Usage|
-|---|---|---|---|---|---|
+|---|---|---|---|---|---|---|---|
 |1|0.025|0.025|128|85.7%|82.9%|11.9k|66.3k|
 |2|0.025|0.01|128|76.2%|71.64%|11.9|66.3|
 |3|0.01|0.01|128|79.4%|79.1%|19.5|67.3|
-|4|0.05|0.05|128|71.4%|79.4%|9.4k|66.1k|
+|4|0.05|0.05|128|71.4%|76.12%|9.4k|66.1k|
 |5|0.05|0.025|128|78%|79.4%|||
 
 |6|0.025|0.025|256|79.4%|79.1%|19.5|67.3|
@@ -206,12 +206,12 @@ If I had more time to work on this project, it could be further developed in the
 
 ## 9. References and Resources
 
-- Splice Sounds: https://splice.com/sounds/labels/splice
-- Arduino Nano 33BLE Sense technical guide: https://docs.edgeimpulse.com/docs/development-platforms/officially-supported-mcu-targets/arduino-nano-33-ble-sense
-- Arduino Library: https://docs.edgeimpulse.com/docs/deployment/arduino-library
-- Recognize sounds from audio: https://docs.edgeimpulse.com/docs/tutorials/audio-classification
-- https://store.arduino.cc/products/nano-33-ble-sense-rev2?gclid=Cj0KCQjwgLOiBhC7ARIsAIeetVBhlAOKVwvvmz9SACyagg8Fqprz_yf8vFp8xQK5vKkbtoibmFFnEuwaAjjUEALw_wcB
-- EON Tuner: https://docs.edgeimpulse.com/docs/edge-impulse-studio/eon-tuner
+- Arduino Library (no date) Arduino library - Edge Impulse Documentation. Available at: https://docs.edgeimpulse.com/docs/deployment/arduino-library (Accessed: April 29, 2023). 
+- Arduino nano 33 ble sense (no date) Arduino Nano 33 BLE Sense - Edge Impulse Documentation. Available at: https://docs.edgeimpulse.com/docs/development-platforms/officially-supported-mcu-targets/arduino-nano-33-ble-sense (Accessed: April 29, 2023). 
+- Arduino nano 33 ble sense REV2 (no date) Arduino Official Store. Available at: https://store.arduino.cc/products/nano-33-ble-sense-rev2?gclid=Cj0KCQjwgLOiBhC7ARIsAIeetVBhlAOKVwvvmz9SACyagg8Fqprz_yf8vFp8xQK5vKkbtoibmFFnEuwaAjjUEALw_wcB (Accessed: April 29, 2023). 
+- Eon Tuner (no date) EON Tuner - Edge Impulse Documentation. Available at: https://docs.edgeimpulse.com/docs/edge-impulse-studio/eon-tuner (Accessed: April 29, 2023). 
+- Recognize sounds from audio (no date) Recognize sounds from audio - Edge Impulse Documentation. Available at: https://docs.edgeimpulse.com/docs/tutorials/audio-classification (Accessed: April 29, 2023). 
+- Splice sample packs (no date) Splice. Available at: https://splice.com/sounds/labels/splice (Accessed: April 29, 2023). 
 
 
 ## 10. Declaration of Authorship
