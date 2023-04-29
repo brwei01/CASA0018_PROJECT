@@ -83,7 +83,8 @@ This option to deploy the model as an Arduino library has a new feature that the
 
 
 ## 4. Data 
-The data are sampled from mainly 2 sources: demo clips from Splice Sounds and self-contained audio sources from Ableton Live Suite 10 [1]. The sound clips labeled as 'kicks' and 'toms' are played on the desktop and recorded by Arduino Nano BLE33 built-in microphone. The signal recorded was then transmitted and uploaded to Edge Impulse platform, where labels can be given according to their orginal groups and a preview of the shapes of the signals can be presented. The data samples are collected as sound clips of 15000 miliseconds at 16000 hertz. The sampling rate is decided to satisfy the Nyquist's theorem for all samples. (for detailed information please refer to appendix[iii]) Around 80% of the data (313 records) was splitted as training set and 20% (84 records) as test set, and in total they account for 10m10s of audio recording.
+The data are sampled from mainly 2 sources: demo clips from Splice Sounds and self-contained audio sources from Ableton Live Suite 10 [1]. The sound clips labeled as 'kicks' and 'toms' are played on the desktop and recorded by Arduino Nano BLE33 built-in microphone. The signal recorded was then transmitted and uploaded to Edge Impulse platform, where labels can be given according to their orginal groups and a preview of the shapes of the signals can be presented. The data samples are collected as sound clips of 15000 miliseconds at 16000 hertz. The sampling rate is decided to satisfy the Nyquist's theorem for all samples. (for detailed information please refer to 
+[iii]) Around 80% of the data (313 records) was splitted as training set and 20% (84 records) as test set, and in total they account for 10m10s of audio recording.
 <table>
   <tr>
     <td><img width="794" alt="train_test_split_rate" src="https://user-images.githubusercontent.com/116358733/235218284-82d79bd5-8fc1-49a6-89c6-42e20a09ebd1.png"></td>
@@ -95,7 +96,7 @@ These latter preprocessing steps are implemented within the models building proc
 
 
 ## 5. Model
-The model architecture chosen is a Spectrogram model with 4 1-dimensional convolutional neural network. The model requires 4 hyperparameters: Frame length, Frame stride and FFT length. Frame length was set as 0.025 second, indicating the length of segments when performing windowing over each record. Frame stride was decided as 0.025 second, meaning that the neighbouring two windows does not have any overlapping. FFT length is decided as 128, meaning that within each cycle on the frequency chart, 128 sample points are taken to represent the oscillation during the period of time within the cycle (detailed information please refer to appendix.[3]). This process of how raw data is processed through setting these parameters is shown here:
+The model architecture chosen is a Spectrogram model with 4 1-dimensional convolutional neural network. The model requires 4 hyperparameters: Frame length, Frame stride and FFT length. Frame length was set as 0.025 second, indicating the length of segments when performing windowing over each record. Frame stride was decided as 0.025 second, meaning that the neighbouring two windows does not have any overlapping. FFT length is decided as 128, meaning that within each cycle on the frequency chart, 128 sample points are taken to represent the oscillation during the period of time within the cycle (detailed information please refer to appendix[iii]). This process of how raw data is processed through setting these parameters is shown here:
 
 <img width="1035" alt="flowchart_data_preprocessing" src="https://user-images.githubusercontent.com/116358733/235274762-87ec8590-046a-47b3-9a90-fffdfc9af228.png">
 
@@ -178,7 +179,7 @@ In the final project, audio clips are recorded directly by the Arduino sensor wi
 
 
 ### 7.3. observations 
-The model was broadly tested by a wide range of sound clips labeled toms and kicks. And these test samples are also characterized in their names as 'cinematic', 'acoustic' etc, which may indicate these clips are quite different in design even within each label. Utilizing the variety of clips can be  It was noticed that the differece in resnotation and change in frequencies of the two types of sounds are well captured by the model. The figure below shows, a kick that appears to have longer resonation (can be engineered by managing decay and release, please refer to appendix[3] for detailed information) was misclassified as tom, and vice versa, a tom that has shorter resonation and sooner attack can be misclassified as kick.
+The model was broadly tested by a wide range of sound clips labeled toms and kicks. And these test samples are also characterized in their names as 'cinematic', 'acoustic' etc, which may indicate these clips are quite different in design even within each label. Utilizing the variety of clips can be  It was noticed that the differece in resnotation and change in frequencies of the two types of sounds are well captured by the model. The figure below shows, a kick that appears to have longer resonation (can be engineered by managing decay and release, please refer to appendix[iii] for detailed information) was misclassified as tom, and vice versa, a tom that has shorter resonation and sooner attack can be misclassified as kick.
 
 <img width="946" alt="mc_kick_reson" src="https://user-images.githubusercontent.com/116358733/234876502-af5544a2-1b04-45b6-a801-41c3e5366c61.png">
 
