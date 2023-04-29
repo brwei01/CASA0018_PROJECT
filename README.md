@@ -89,9 +89,18 @@ The model architecture chosen is a Spectrogram model with 4 1-dimensional convol
 
 In the next steps, the preprocessed data samples are put into the neural. The neural network is structured as shown in the image below. The 2600 features processed from the last step as the input layer was firstly reshaped into 65 columns. The reshaped layer was then applied to 4 1D-convolutional layers all with a kernel size of 3, and containing neurons of 16, 32, 64 and 128 respectively. The features then goes into a flatten layer and a dropout layer (with rate 0.5) to output the features into 2 categories. The training process consisted of 100 cycles at a learning rate of 0.005.
 
-<img width="464" alt="model_architecture" src="https://user-images.githubusercontent.com/116358733/235273595-be393fd7-5222-4337-a8f6-a2844a3e652b.png">
+<table>
+  <tr>
+    <td><img width="464" alt="model_architecture" src="https://user-images.githubusercontent.com/116358733/235273595-be393fd7-5222-4337-a8f6-a2844a3e652b.png">
+</td>
+    <td><img width="674" alt="model_code" src="https://user-images.githubusercontent.com/116358733/235298817-40741c74-53c6-4a3b-bb0d-e7564ae70bae.png">
 
-Lastly, the deployment of the model on an Arduino have produced a report for peak RAM and flash usages. And these were found to be moderate, indicating that the model was relatively lightweight and suitable for such kind of sensor.
+</td>
+  </tr>
+</table>
+
+
+Lastly, the deployment of the model on an Arduino have produced a report for peak RAM usage of 11.9kb and a flash usages of 66.3kb were found to be moderate, indicating that the model was relatively lightweight and suitable for such kind of sensor (with 1MB flash and 256kb SRAM).
 
 <img width="471" alt="on_device_performance" src="https://user-images.githubusercontent.com/116358733/235273576-6c03c3cb-7372-4073-a0f8-874ac6e6fb1f.png">
 
@@ -152,7 +161,7 @@ If I had more time to work on this project, it could be further developed in the
 1. Adding more types of instruments to the collection.
 2. Incorporating more variations in tone for each instrument.
 3. Taking into consideration the factor of sound field. The position of different instruments has general guidelines and conventions, and often be engineered in electronic music production. This aspect may help us classify the instrument from its sound clip as an additional reference.
-4. increase the amount of data.
+4. Increase the amount of data.
 
 
 ## 8. Appendix
@@ -167,6 +176,7 @@ If I had more time to work on this project, it could be further developed in the
 - Arduino Nano 33BLE Sense technical guide: https://docs.edgeimpulse.com/docs/development-platforms/officially-supported-mcu-targets/arduino-nano-33-ble-sense
 - Arduino Library: https://docs.edgeimpulse.com/docs/deployment/arduino-library
 - Recognize sounds from audio: https://docs.edgeimpulse.com/docs/tutorials/audio-classification
+- https://store.arduino.cc/products/nano-33-ble-sense-rev2?gclid=Cj0KCQjwgLOiBhC7ARIsAIeetVBhlAOKVwvvmz9SACyagg8Fqprz_yf8vFp8xQK5vKkbtoibmFFnEuwaAjjUEALw_wcB
 
 
 ## 10. Declaration of Authorship
