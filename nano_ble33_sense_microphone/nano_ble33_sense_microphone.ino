@@ -79,7 +79,7 @@ void loop()
 {
     ei_printf("Starting inferencing in 2 seconds...\n");
 
-    delay(2000);
+    delay(5000);
 
     ei_printf("Recording...\n");
 
@@ -123,26 +123,12 @@ void loop()
   delay(1000);
 } else {
   // Flash green
+for (int i = 0; i < 5; i++) {
   digitalWrite(LED_BUILTIN, HIGH);
   delay(50);
   digitalWrite(LED_BUILTIN, LOW);
   delay(50);
-  digitalWrite(LED_BUILTIN, HIGH);
-  delay(50);
-  digitalWrite(LED_BUILTIN, LOW);
-  delay(50);
-    digitalWrite(LED_BUILTIN, HIGH);
-  delay(50);
-  digitalWrite(LED_BUILTIN, LOW);
-  delay(50);
-    digitalWrite(LED_BUILTIN, HIGH);
-  delay(50);
-  digitalWrite(LED_BUILTIN, LOW);
-  delay(50);
-    digitalWrite(LED_BUILTIN, HIGH);
-  delay(50);
-  digitalWrite(LED_BUILTIN, LOW);
-  delay(50);
+}
 }
 
 
