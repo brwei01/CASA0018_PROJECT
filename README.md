@@ -79,8 +79,10 @@ Then download and open up the sketch file '/nano_ble33_sense_microphone/nano_ble
 
 *Figure 4. Run the model and monitor outputs in Arduino IDE*
 
-This option to deploy the model as an Arduino library has a new feature that the classification result can be observed through different flashing behaviours of the on board LED: It is set to flash once for 1000ms if the result is 'kick' and to flash 5 times for 50ms each time if the result indicates 'tom'. 
+This option to deploy the model as an Arduino library has 2 new features: 1. The delay per inferencing loop is set as 5000ms to make the application more user-friendly. 2. The classification result can be observed through different flashing behaviours of the on board LED: It is set to flash once for 1000ms if the result is 'kick' and to flash 5 times for 50ms each time if the result indicates 'tom'. 
 
+<img width="864" alt="setting_delay" src="https://user-images.githubusercontent.com/116358733/235664569-bb76c3f5-face-4f2f-a2d7-00ad809e484b.png">
+<img width="829" alt="LED_B" src="https://user-images.githubusercontent.com/116358733/235664580-6689364a-0ed1-4784-a2fb-d9f5d6363243.png">
 <img width="854" alt="flash_behaviour" src="https://user-images.githubusercontent.com/116358733/235215069-7017717d-969e-41b2-ae14-2cd99c713c81.png">
 
 *Figure 5. different LED flash pattern on classification*
