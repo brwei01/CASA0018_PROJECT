@@ -189,11 +189,18 @@ In the final project, audio clips are recorded directly by the Arduino sensor wi
 
 
 ### 7.3. observations 
-The model was broadly tested by a wide range of sound clips labeled toms and kicks. And these test samples are also characterized in their names as 'cinematic', 'acoustic' etc, which may indicate these clips are quite different in design even within each label. Utilizing the variety of clips can be  It was noticed that the differece in resnotation and change in frequencies of the two types of sounds are well captured by the model. The figure below shows, a kick that appears to have longer resonation (can be engineered by managing decay and release, please refer to appendix[iii] for detailed information) was misclassified as tom, and vice versa, a tom that has shorter resonation and sooner attack can be misclassified as kick.
+The model was broadly tested by a wide range of sound clips labelled toms and kicks. And these test samples are also characterized in their names as 'cinematic', 'acoustic' etc, which may indicate these clips are quite different in design even within each label. Utilizing the variety of clips can be It was noticed that the difference in resonation and change in frequencies of the two types of sounds are well captured by the model. The figure below shows, a kick that appears to have longer resonation (can be engineered by managing decay and release, please refer to appendix[iii] for detailed information) was misclassified as tom, and vice versa, a tom that has shorter resonation and sooner attack can be misclassified as kick.
 
-<img width="946" alt="mc_kick_reson" src="https://user-images.githubusercontent.com/116358733/234876502-af5544a2-1b04-45b6-a801-41c3e5366c61.png">
+<table>
+  <tr>
+    <td><img width="1142" alt="typical_kick" src="https://user-images.githubusercontent.com/116358733/235670037-56b85e9c-fb8f-4eb6-9559-d993a0148c11.png">  
+</td>
+    <td><img width="1150" alt="long_res_kick" src="https://user-images.githubusercontent.com/116358733/235670090-d97038f3-2f17-4f6d-8ba4-bb1d671ee47a.png">
+</td>
+  </tr>
+</table>
 
-*Figure 11: An example of false classification*
+*Figure 11: An example of false classification (kick with longer resonation) on the right, compared to a typical kick with short resonation and louder attack on the left.*
 
 Moreover, although spectrogram models do not perform as well as MFE or MFCC models during the pre-fitting stage, they seem to outperform the latter two after fine-tuning. This suggests that for instrumental sound clip classification tasks that transfer raw frequencies to spectrograms, deep learning models may perform better without reducing the higher frequency range or mimicking human perception. Additionally, incorporating cepstral coefficients may not be necessary and may overfit the training set by adding an extra dimension for such tasks that only focus on the tone colors of sounds (see table 1). 
 
